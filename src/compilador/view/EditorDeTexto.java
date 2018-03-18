@@ -63,12 +63,13 @@ public class EditorDeTexto extends javax.swing.JFrame {
         menuItemSalvar.addActionListener(listener);
         menuArquivo.add(menuItemSalvar);
 
+        menuItemSalvarComo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         menuItemSalvarComo.setText("Salvar como");
         menuItemSalvarComo.addActionListener(listener);
         menuArquivo.add(menuItemSalvarComo);
 
         menuItemFechar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        menuItemFechar.setText("Fechar");
+        menuItemFechar.setText("Sair");
         menuItemFechar.addActionListener(listener);
         menuArquivo.add(menuItemFechar);
 
