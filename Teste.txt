@@ -1,0 +1,10 @@
+Program teste123;
+	Begin:
+	Procedure somar();
+		Begin:
+			Var a, b, c:Integer;
+			a = 10;
+			b = 2;
+			c:=a+b;
+		End;
+	End.

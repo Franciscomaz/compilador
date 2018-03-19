@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compilador.token;
 
 import java.util.HashMap;
 
-/**
- *
- * @author comp1
- */
 public class TabelaDeTokens {
     private final HashMap<String, Integer> tabela;
     
@@ -75,7 +66,7 @@ public class TabelaDeTokens {
     
     public Token getIdentificador(String palavra) {
         if (tabela.containsKey(palavra)) {
-            return new Token(tabela.get(palavra), "");
+            return new Token(tabela.get(palavra), palavra);
         } else {
             return new Token(tabela.get("Identificador"), palavra);
         }

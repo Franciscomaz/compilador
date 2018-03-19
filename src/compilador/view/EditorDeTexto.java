@@ -22,6 +22,9 @@ public class EditorDeTexto extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void setModel(Tabela tabela){
+        tabelaTokens.setModel(tabela);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +36,8 @@ public class EditorDeTexto extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         areaDeTexto = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaTokens = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuItemAbrir = new javax.swing.JMenuItem();
@@ -51,6 +56,19 @@ public class EditorDeTexto extends javax.swing.JFrame {
         areaDeTexto.setRows(5);
         areaDeTexto.setWrapStyleWord(true);
         jScrollPane1.setViewportView(areaDeTexto);
+
+        tabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Código", "Lexema"
+            }
+        ));
+        jScrollPane2.setViewportView(tabelaTokens);
 
         menuArquivo.setText("Arquivo");
 
@@ -98,11 +116,15 @@ public class EditorDeTexto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
 
         pack();
@@ -144,6 +166,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
     private javax.swing.JTextArea areaDeTexto;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenu menuExecutar;
@@ -153,5 +176,6 @@ public class EditorDeTexto extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemFormatacao;
     private javax.swing.JMenuItem menuItemSalvar;
     private javax.swing.JMenuItem menuItemSalvarComo;
+    private javax.swing.JTable tabelaTokens;
     // End of variables declaration//GEN-END:variables
 }

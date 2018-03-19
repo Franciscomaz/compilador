@@ -28,6 +28,7 @@ public class ArquivoUtils {
             throw new IOException("Arquivo não encontrado.");
         }
     }
+    
     public static void salvar(String conteudo, String path) throws IOException{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             writer.write(conteudo);

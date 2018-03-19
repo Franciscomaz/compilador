@@ -8,11 +8,14 @@ package compilador.controllers;
 import compilador.scanner.ErroLexico;
 import compilador.scanner.Leitor;
 import compilador.scanner.Scanner;
+import compilador.token.Token;
 import compilador.utils.ArquivoUtils;
 import compilador.view.EditorDeTexto;
+import compilador.view.Tabela;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Stack;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -90,7 +93,9 @@ public class EditorController implements ActionListener {
 
     private void compilar() throws ErroLexico {
         System.out.println("-----------Pilha------------");
-        new Scanner(new Leitor(editor.getTexto())).geTokens().forEach(System.out::println);
+        Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
+        pilha.forEach(System.out::println);
+        editor.setModel(new Tabela(pilha));
     }
 
     private void sair() {

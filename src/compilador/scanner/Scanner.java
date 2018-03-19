@@ -47,9 +47,9 @@ public class Scanner {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
             } else if (caracter.toString().matches("\\+|\\*|-|/")) {
-                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), ""));
+                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
-                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), ""));
+                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
             } else {
                 throw new ErroLexico(leitor);
             }
@@ -60,10 +60,13 @@ public class Scanner {
     private Token lerIdentificador() throws ErroLexico {
         String lexema = "";
         while (leitor.hasNext()) {
-            Character caracter = leitor.proximoCaracter();
+            
             if(lexema.length() > 30){
                 throw new ErroLexico(leitor);
             }
+            
+            Character caracter = leitor.proximoCaracter();
+            
             if (!Character.isLetterOrDigit(caracter) && caracter != '_') {
                 leitor.rollBack();
                 break;
@@ -84,7 +87,15 @@ public class Scanner {
                 leitor.rollBack();
                 break;
             }
+            
             lexema += caracter;
+           
+            //Trata se o numero for maior que a quantidade permitida...
+            int valorInteiro = Integer.parseInt(lexema);
+            if (valorInteiro > 32767 || valorInteiro < -32767) {
+               throw new ErroLexico(leitor);
+            }
+            
         }
         return new Token(tabelaDeTokens.getCodigo("Inteiro"), lexema);
     }
@@ -109,7 +120,7 @@ public class Scanner {
                 leitor.rollBack();
             }
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), "");
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
     }
 
     private Token lerCaracteresEspeciais() {
@@ -123,7 +134,7 @@ public class Scanner {
                 leitor.rollBack();
             }
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), "");
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
     }
 
     private Token lerLiteral() throws ErroLexico {
@@ -153,6 +164,6 @@ public class Scanner {
         } else {
             lexema += caracter;
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), "");
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
     }
 }
