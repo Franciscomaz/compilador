@@ -49,7 +49,9 @@ public class Scanner {
             } else if (caracter.toString().matches("\\+|\\*|-|/")) {
                 bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
-                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
+                leitor.rollBack();
+                lerComentario();
+                //bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
             } else {
                 throw new ErroLexico(leitor);
             }
@@ -136,7 +138,7 @@ public class Scanner {
         }
         return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
     }
-
+    
     private Token lerLiteral() throws ErroLexico {
         String lexema = "";
         Character caracter = null;
@@ -165,5 +167,28 @@ public class Scanner {
             lexema += caracter;
         }
         return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
+    }
+    
+    private void lerComentario() throws ErroLexico{
+        String lexema = leitor.proximoCaracter().toString();
+        if(leitor.proximoCaracter() != '*'){
+            bufferTokens.push(new Token(tabelaDeTokens.getCodigo(lexema), lexema));
+            leitor.rollBack();
+            return;
+        } 
+        boolean isFimDoComentario = false;
+        while(leitor.hasNext()){
+            Character caracter = leitor.proximoCaracter();
+            if(caracter == '*'){
+                if(leitor.proximoCaracter() == ')'){
+                    isFimDoComentario = true;
+                    break;
+                }
+                leitor.rollBack();
+            }
+        }
+        if(!isFimDoComentario){
+            throw new ErroLexico(leitor);
+        }
     }
 }
