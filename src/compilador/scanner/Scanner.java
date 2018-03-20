@@ -51,7 +51,6 @@ public class Scanner {
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
                 leitor.rollBack();
                 lerComentario();
-                //bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
             } else {
                 throw new ErroLexico(leitor);
             }
@@ -62,13 +61,10 @@ public class Scanner {
     private Token lerIdentificador() throws ErroLexico {
         String lexema = "";
         while (leitor.hasNext()) {
-            
             if(lexema.length() > 30){
                 throw new ErroLexico(leitor);
             }
-            
             Character caracter = leitor.proximoCaracter();
-            
             if (!Character.isLetterOrDigit(caracter) && caracter != '_') {
                 leitor.rollBack();
                 break;
