@@ -9,10 +9,6 @@ import compilador.token.TabelaDeTokens;
 import compilador.token.Token;
 import java.util.Stack;
 
-/**
- *
- * @author Chicom
- */
 public class Scanner {
 
     private final Leitor leitor;
