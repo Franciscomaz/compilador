@@ -5,34 +5,38 @@
  */
 package compilador.scanner;
 
+import java.util.Stack;
+
 /**
  *
  * @author Chicom
  */
 public class Leitor {
 
-    private int linha = 1;
-    private int coluna = 0;
     private int posicao = -1;
     private final String texto;
+    private final Stack<Integer> pilha;
 
     public Leitor(String texto) {
         this.texto = texto;
+        pilha = new Stack<>();
+        pilha.push(0);
     }
 
     public int getLinha() {
-        return linha;
+        return pilha.size();
     }
 
     public int getColuna() {
-        return coluna;
+        return pilha.peek();
     }
 
     public void rollBack() {
         if (--posicao > -1 && texto.charAt(posicao) == '\n') {
-            linha--;
+            pilha.pop();
+        } else {
+            pilha.push(pilha.pop() - 1);
         }
-        coluna--;
     }
 
     public boolean hasNext() {
@@ -44,16 +48,15 @@ public class Leitor {
             return null;
         }
         if (texto.charAt(++posicao) == '\n') {
-            linha++;
-            coluna = 0;
+            pilha.push(0);
         } else {
-            coluna++;
+            pilha.push(pilha.pop() + 1);
         }
         return texto.charAt(posicao);
     }
 
     @Override
     public String toString() {
-        return "linha " + linha + ", coluna " + coluna;
+        return "linha " + getLinha() + ", coluna " + getColuna();
     }
 }
