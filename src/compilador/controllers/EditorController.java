@@ -49,6 +49,7 @@ public class EditorController implements ActionListener {
                 salvarComo();
                 break;
             case "Formatar":
+                formatar();
                 break;
             case "Compilar":
                 compilar();
@@ -87,7 +88,7 @@ public class EditorController implements ActionListener {
         salvar();
     }
 
-    private void formatar(String path) throws IOException {
+    private void formatar() throws IOException {
 
     }
 
