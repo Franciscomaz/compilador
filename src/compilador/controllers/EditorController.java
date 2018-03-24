@@ -5,13 +5,17 @@
  */
 package compilador.controllers;
 
+import compilador.mensagem.MensagemDeErro;
+import compilador.mensagem.MensagemDeSucesso;
 import compilador.scanner.ErroLexico;
 import compilador.scanner.Leitor;
 import compilador.scanner.Scanner;
 import compilador.token.Token;
 import compilador.utils.ArquivoUtils;
 import compilador.view.EditorDeTexto;
-import compilador.view.Tabela;
+import compilador.scanner.Tabela;
+import compilador.view.Console;
+import compilador.view.TabelaView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -32,12 +36,12 @@ public class EditorController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             verificarComando(e);
-        } catch (IOException | ErroLexico ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(editor, ex.getMessage());
         }
     }
 
-    private void verificarComando(ActionEvent e) throws IOException, ErroLexico {
+    private void verificarComando(ActionEvent e) throws IOException{
         switch (e.getActionCommand()) {
             case "Novo":
                 novo();
@@ -65,11 +69,11 @@ public class EditorController implements ActionListener {
         }
     }
 
-    private void novo(){
+    private void novo() {
         editor.setTexto("");
         filePath = null;
     }
-    
+
     private void abrir() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(editor) == JFileChooser.CANCEL_OPTION) {
@@ -100,11 +104,14 @@ public class EditorController implements ActionListener {
 
     }
 
-    private void compilar() throws ErroLexico {
-        System.out.println("-----------Pilha------------");
-        Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
-        pilha.forEach(System.out::println);
-        editor.setTableModel(new Tabela(pilha));
+    private void compilar() {
+        try {
+            Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
+            editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
+            editor.adicionarConsole(new Console(new MensagemDeSucesso()));
+        } catch (ErroLexico e) {
+            editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
+        }
     }
 
     private void sair() {

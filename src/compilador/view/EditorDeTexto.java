@@ -6,6 +6,7 @@
 package compilador.view;
 
 import compilador.controllers.EditorController;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 
@@ -20,8 +21,25 @@ public class EditorDeTexto extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setTableModel(Tabela tabela){
-        tabelaTokens.setModel(tabela);
+    public void adicionarTabela(TabelaView tabela){
+        adicionarComponente(tabela, java.awt.BorderLayout.EAST);
+    }
+    
+    public void adicionarConsole(Console console){
+        adicionarComponente(console, java.awt.BorderLayout.SOUTH);
+    }
+    
+    private void adicionarComponente(Component componente, String posicao){
+        removerComponente(componente);
+        getContentPane().add(componente, posicao);    
+        pack();
+    }
+    
+    private void removerComponente(Component component){
+        for(Component c : getContentPane().getComponents()){
+            if(c.getClass().equals(component.getClass()))
+                getContentPane().remove(c);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,17 +50,15 @@ public class EditorDeTexto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        areaDeTexto = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabelaTokens = new javax.swing.JTable();
-        jToolBar1 = new javax.swing.JToolBar();
+        barraDeFerramentas = new javax.swing.JToolBar();
         buttonNovo = new javax.swing.JButton();
         buttonAbrir = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonCompilar = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        panelAreaDeTexto = new javax.swing.JScrollPane();
+        areaDeTexto = new javax.swing.JTextArea();
+        barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuItemNovo = new javax.swing.JMenuItem();
         menuItemAbrir = new javax.swing.JMenuItem();
@@ -55,60 +71,56 @@ public class EditorDeTexto extends javax.swing.JFrame {
         menuItemCompilar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(908, 522));
 
-        areaDeTexto.setColumns(20);
-        areaDeTexto.setLineWrap(true);
-        areaDeTexto.setRows(5);
-        areaDeTexto.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(areaDeTexto);
+        barraDeFerramentas.setRollover(true);
 
-        tabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Lexema"
-            }
-        ));
-        jScrollPane2.setViewportView(tabelaTokens);
-
-        jToolBar1.setRollover(true);
-
-        buttonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/images/novo.png"))); // NOI18N
+        buttonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/imagens/novo.png"))); // NOI18N
         buttonNovo.setActionCommand("Novo");
         buttonNovo.setFocusable(false);
         buttonNovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonNovo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(buttonNovo);
+        barraDeFerramentas.add(buttonNovo);
         buttonNovo.addActionListener(listener);
 
-        buttonAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/images/abrir.png"))); // NOI18N
+        buttonAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/imagens/abrir.png"))); // NOI18N
         buttonAbrir.setActionCommand("Abrir");
         buttonAbrir.setFocusable(false);
         buttonAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonAbrir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(buttonAbrir);
+        barraDeFerramentas.add(buttonAbrir);
         buttonAbrir.addActionListener(listener);
 
-        buttonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/images/salvar.png"))); // NOI18N
+        buttonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/imagens/salvar.png"))); // NOI18N
         buttonSalvar.setToolTipText("");
         buttonSalvar.setActionCommand("Salvar");
         buttonSalvar.setFocusable(false);
         buttonSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(buttonSalvar);
+        barraDeFerramentas.add(buttonSalvar);
         buttonSalvar.addActionListener(listener);
 
         jSeparator1.setToolTipText("");
-        jToolBar1.add(jSeparator1);
+        barraDeFerramentas.add(jSeparator1);
 
-        buttonCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/images/compilar.png"))); // NOI18N
+        buttonCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/view/imagens/compilar.png"))); // NOI18N
         buttonCompilar.setActionCommand("Compilar");
         buttonCompilar.setFocusable(false);
         buttonCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonCompilar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(buttonCompilar);
+        barraDeFerramentas.add(buttonCompilar);
         buttonCompilar.addActionListener(listener);
+
+        getContentPane().add(barraDeFerramentas, java.awt.BorderLayout.PAGE_START);
+
+        areaDeTexto.setColumns(20);
+        areaDeTexto.setLineWrap(true);
+        areaDeTexto.setRows(5);
+        areaDeTexto.setTabSize(4);
+        areaDeTexto.setWrapStyleWord(true);
+        panelAreaDeTexto.setViewportView(areaDeTexto);
+
+        getContentPane().add(panelAreaDeTexto, java.awt.BorderLayout.CENTER);
 
         menuArquivo.setText("Arquivo");
 
@@ -135,7 +147,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
         menuItemFechar.addActionListener(listener);
         menuArquivo.add(menuItemFechar);
 
-        jMenuBar1.add(menuArquivo);
+        barraDeMenus.add(menuArquivo);
 
         menuEditar.setText("Editar");
 
@@ -143,7 +155,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
         menuItemFormatacao.addActionListener(listener);
         menuEditar.add(menuItemFormatacao);
 
-        jMenuBar1.add(menuEditar);
+        barraDeMenus.add(menuEditar);
 
         menuExecutar.setText("Executar");
 
@@ -152,29 +164,9 @@ public class EditorDeTexto extends javax.swing.JFrame {
         menuItemCompilar.addActionListener(listener);
         menuExecutar.add(menuItemCompilar);
 
-        jMenuBar1.add(menuExecutar);
+        barraDeMenus.add(menuExecutar);
 
-        setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)))
-        );
+        setJMenuBar(barraDeMenus);
 
         pack();
         setLocationRelativeTo(null);
@@ -214,15 +206,13 @@ public class EditorDeTexto extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDeTexto;
+    private javax.swing.JToolBar barraDeFerramentas;
+    private javax.swing.JMenuBar barraDeMenus;
     private javax.swing.JButton buttonAbrir;
     private javax.swing.JButton buttonCompilar;
     private javax.swing.JButton buttonNovo;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenu menuExecutar;
@@ -233,6 +223,6 @@ public class EditorDeTexto extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemNovo;
     private javax.swing.JMenuItem menuItemSalvar;
     private javax.swing.JMenuItem menuItemSalvarComo;
-    private javax.swing.JTable tabelaTokens;
+    private javax.swing.JScrollPane panelAreaDeTexto;
     // End of variables declaration//GEN-END:variables
 }

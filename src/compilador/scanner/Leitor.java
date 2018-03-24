@@ -57,6 +57,6 @@ public class Leitor {
 
     @Override
     public String toString() {
-        return "linha " + getLinha() + ", coluna " + getColuna();
+        return "linha " + getLinha() + ", coluna " + getColuna() + ".";
     }
 }

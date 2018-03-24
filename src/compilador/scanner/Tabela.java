@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package compilador.view;
+package compilador.scanner;
 
 import compilador.token.Token;
 import java.util.ArrayList;
