@@ -39,6 +39,9 @@ public class EditorController implements ActionListener {
 
     private void verificarComando(ActionEvent e) throws IOException, ErroLexico {
         switch (e.getActionCommand()) {
+            case "Novo":
+                novo();
+                break;
             case "Abrir":
                 abrir();
                 break;
@@ -62,6 +65,11 @@ public class EditorController implements ActionListener {
         }
     }
 
+    private void novo(){
+        editor.setTexto("");
+        filePath = null;
+    }
+    
     private void abrir() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(editor) == JFileChooser.CANCEL_OPTION) {
@@ -96,7 +104,7 @@ public class EditorController implements ActionListener {
         System.out.println("-----------Pilha------------");
         Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
         pilha.forEach(System.out::println);
-        editor.setModel(new Tabela(pilha));
+        editor.setTableModel(new Tabela(pilha));
     }
 
     private void sair() {
