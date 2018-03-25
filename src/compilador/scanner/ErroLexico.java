@@ -5,6 +5,8 @@
  */
 package compilador.scanner;
 
+import compilador.scanner.Leitor.Posicao;
+
 /**
  *
  * @author Chicom
@@ -18,7 +20,7 @@ public class ErroLexico extends Exception {
         super(message);
     }
     
-    public ErroLexico(Leitor leitor){
-        super("Erro léxico na " + leitor.toString());
+    public ErroLexico(Posicao posicao){
+        super("Erro léxico na " + posicao.toString());
     }
 }

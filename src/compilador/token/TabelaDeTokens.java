@@ -1,5 +1,6 @@
 package compilador.token;
 
+import compilador.scanner.Leitor.Posicao;
 import java.util.HashMap;
 
 public class TabelaDeTokens {
@@ -64,11 +65,11 @@ public class TabelaDeTokens {
         return tabela.get(palavra);
     }
     
-    public Token getIdentificador(String palavra) {
+    public Token getIdentificador(String palavra, Posicao posicao) {
         if (tabela.containsKey(palavra)) {
-            return new Token(tabela.get(palavra), palavra);
+            return new Token(tabela.get(palavra), palavra, posicao);
         } else {
-            return new Token(tabela.get("Identificador"), palavra);
+            return new Token(tabela.get("Identificador"), palavra, posicao);
         }
     }
 }

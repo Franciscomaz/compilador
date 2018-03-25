@@ -16,11 +16,11 @@ import javax.swing.table.AbstractTableModel;
  * @author Francisco
  */
 public class Tabela extends AbstractTableModel {
-    private final Stack<Token> pilha;
+    private final Stack<Token> bufferTokens;
     private final List<String> titulo;
     
-    public Tabela(Stack<Token> pilha) {
-        this.pilha = pilha;
+    public Tabela(Stack<Token> bufferTokens) {
+        this.bufferTokens = bufferTokens;
         titulo = new ArrayList<>();
         titulo.add("Codigo");
         titulo.add("Lexema");
@@ -28,7 +28,7 @@ public class Tabela extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return pilha.size();
+        return bufferTokens.size();
     }
 
     @Override
@@ -44,9 +44,9 @@ public class Tabela extends AbstractTableModel {
     @Override
     public Object getValueAt(int linha, int coluna) {
         if(coluna == 0){
-            return pilha.get(linha).getCodigo();
+            return bufferTokens.get(linha).getCodigo();
         } else {
-            return pilha.get(linha).getLexema();
+            return bufferTokens.get(linha).getLexema();
         }
     }
 }

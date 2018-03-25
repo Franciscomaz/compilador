@@ -12,7 +12,6 @@ import java.util.Stack;
  * @author Chicom
  */
 public class Leitor {
-
     private int posicao = -1;
     private final String texto;
     private final Stack<Integer> pilha;
@@ -23,12 +22,8 @@ public class Leitor {
         pilha.push(0);
     }
 
-    public int getLinha() {
-        return pilha.size();
-    }
-
-    public int getColuna() {
-        return pilha.peek();
+    public Posicao getPosicao() {
+        return new Posicao(pilha);
     }
 
     public void rollBack() {
@@ -55,8 +50,26 @@ public class Leitor {
         return texto.charAt(posicao);
     }
 
-    @Override
-    public String toString() {
-        return "linha " + getLinha() + ", coluna " + getColuna() + ".";
+    public class Posicao {
+        private final int linha;
+        private final int coluna;
+
+        private Posicao(Stack<Integer> posicao) {
+            this.linha = posicao.size();
+            this.coluna = posicao.peek();
+        }
+
+        public int getLinha() {
+            return linha;
+        }
+
+        public int getColuna() {
+            return coluna;
+        }
+
+        @Override
+        public String toString() {
+            return "linha " + getLinha() + ", coluna " + getColuna() + ".";
+        }
     }
 }

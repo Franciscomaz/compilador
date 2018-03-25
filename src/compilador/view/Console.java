@@ -15,14 +15,19 @@ public class Console extends javax.swing.JPanel {
 
     /**
      * Creates new form Console
+     *
      * @param mensagem
      */
     public Console(Mensagem mensagem) {
         initComponents();
+        setMensagem(mensagem);
+    }
+
+    public void setMensagem(Mensagem mensagem) {
         painelDeTexto.setForeground(mensagem.getColor());
         painelDeTexto.setText(mensagem.getMensagem());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

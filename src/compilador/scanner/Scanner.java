@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compilador.scanner;
 
 import compilador.token.TabelaDeTokens;
@@ -25,7 +20,9 @@ public class Scanner {
         while (leitor.hasNext()) {
             Character caracter = leitor.proximoCaracter();
             if (Character.isWhitespace(caracter)) {
-            } else if (Character.isLetter(caracter) || caracter=='_') {
+                continue;
+            }
+            if (Character.isLetter(caracter) || caracter == '_') {
                 leitor.rollBack();
                 bufferTokens.add(lerIdentificador());
             } else if (Character.isDigit(caracter)) {
@@ -39,16 +36,16 @@ public class Scanner {
                 bufferTokens.add(lerCaracteresEspeciais());
             } else if (caracter == '\'') {
                 bufferTokens.add(lerLiteral());
-            } else if (caracter == ':'){
+            } else if (caracter == ':') {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
             } else if (caracter.toString().matches("\\+|\\*|-|/")) {
-                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString()));
+                bufferTokens.add(new Token(tabelaDeTokens.getCodigo(caracter.toString()), caracter.toString(), leitor.getPosicao()));
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
                 leitor.rollBack();
-                lerComentario();
+                lerCaracteresDeAberturaOuFechamento();
             } else {
-                throw new ErroLexico(leitor);
+                throw new ErroLexico(leitor.getPosicao());
             }
         }
         return bufferTokens;
@@ -57,8 +54,8 @@ public class Scanner {
     private Token lerIdentificador() throws ErroLexico {
         String lexema = "";
         while (leitor.hasNext()) {
-            if(lexema.length() > 30){
-                throw new ErroLexico(leitor);
+            if (lexema.length() > 30) {
+                throw new ErroLexico(leitor.getPosicao());
             }
             Character caracter = leitor.proximoCaracter();
             if (!Character.isLetterOrDigit(caracter) && caracter != '_') {
@@ -67,7 +64,7 @@ public class Scanner {
             }
             lexema += caracter;
         }
-        return tabelaDeTokens.getIdentificador(lexema);
+        return tabelaDeTokens.getIdentificador(lexema, leitor.getPosicao());
     }
 
     private Token lerDigito() throws ErroLexico {
@@ -75,23 +72,20 @@ public class Scanner {
         while (leitor.hasNext()) {
             Character caracter = leitor.proximoCaracter();
             if (Character.isLetter(caracter) || caracter == '_') {
-                throw new ErroLexico(leitor);
+                throw new ErroLexico(leitor.getPosicao());
             }
             if (!Character.isDigit(caracter)) {
                 leitor.rollBack();
                 break;
             }
-            
             lexema += caracter;
-           
             //Trata se o numero for maior que a quantidade permitida...
             int valorInteiro = Integer.parseInt(lexema);
             if (valorInteiro > 32767 || valorInteiro < -32767) {
-               throw new ErroLexico(leitor);
+                throw new ErroLexico(leitor.getPosicao());
             }
-            
         }
-        return new Token(tabelaDeTokens.getCodigo("Inteiro"), lexema);
+        return new Token(tabelaDeTokens.getCodigo("Inteiro"), lexema, leitor.getPosicao());
     }
 
     private Token lerOperadorRelacional() {
@@ -106,15 +100,19 @@ public class Scanner {
             }
         } else if (caracter == '<' && leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
-            if (caracter == '=') {
-                lexema += caracter;
-            } else if (caracter == '>') {
-                lexema += caracter;
-            } else {
-                leitor.rollBack();
+            switch (caracter) {
+                case '=':
+                    lexema += caracter;
+                    break;
+                case '>':
+                    lexema += caracter;
+                    break;
+                default:
+                    leitor.rollBack();
+                    break;
             }
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema, leitor.getPosicao());
     }
 
     private Token lerCaracteresEspeciais() {
@@ -128,59 +126,63 @@ public class Scanner {
                 leitor.rollBack();
             }
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema, leitor.getPosicao());
     }
-    
+
     private Token lerLiteral() throws ErroLexico {
         String lexema = "";
         Character caracter = null;
         while (leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
-            if(lexema.length() > 255){
-                throw new ErroLexico(leitor);
+            if (lexema.length() > 255) {
+                throw new ErroLexico(leitor.getPosicao());
             }
             if (caracter == '\'') {
                 break;
             }
             lexema += caracter;
         }
-        if(caracter != '\''){
-            throw new ErroLexico(leitor);
+        if (caracter != '\'') {
+            throw new ErroLexico(leitor.getPosicao());
         }
-        return new Token(tabelaDeTokens.getCodigo("Literal"), lexema);
+        return new Token(tabelaDeTokens.getCodigo("Literal"), lexema, leitor.getPosicao());
     }
-    
-    private Token lerAtribuidor(){
+
+    private Token lerAtribuidor() {
         String lexema = leitor.proximoCaracter().toString();
         Character caracter = leitor.proximoCaracter();
-        if(caracter != '='){
+        if (caracter != '=') {
             leitor.rollBack();
         } else {
             lexema += caracter;
         }
-        return new Token(tabelaDeTokens.getCodigo(lexema), lexema);
+        return new Token(tabelaDeTokens.getCodigo(lexema), lexema, leitor.getPosicao());
     }
-    
-    private void lerComentario() throws ErroLexico{
+
+    private void lerCaracteresDeAberturaOuFechamento() throws ErroLexico {
         String lexema = leitor.proximoCaracter().toString();
-        if(leitor.proximoCaracter() != '*'){
-            bufferTokens.push(new Token(tabelaDeTokens.getCodigo(lexema), lexema));
-            leitor.rollBack();
+        if (leitor.proximoCaracter() == '*') {
+            lerComentario();
             return;
-        } 
+        }
+        bufferTokens.push(new Token(tabelaDeTokens.getCodigo(lexema), lexema, leitor.getPosicao()));
+        leitor.rollBack();
+    }
+
+    private void lerComentario() throws ErroLexico {
         boolean isFimDoComentario = false;
-        while(leitor.hasNext()){
+        while (leitor.hasNext()) {
             Character caracter = leitor.proximoCaracter();
-            if(caracter == '*'){
-                if(leitor.proximoCaracter() == ')'){
+            if (caracter == '*') {
+                if (leitor.proximoCaracter() == ')') {
                     isFimDoComentario = true;
                     break;
                 }
                 leitor.rollBack();
             }
         }
-        if(!isFimDoComentario){
-            throw new ErroLexico(leitor);
+        if (!isFimDoComentario) {
+            throw new ErroLexico(leitor.getPosicao());
         }
     }
 }

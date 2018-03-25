@@ -32,7 +32,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
     private void adicionarComponente(Component componente, String posicao){
         removerComponente(componente);
         getContentPane().add(componente, posicao);    
-        pack();
+        revalidate();
     }
     
     private void removerComponente(Component component){
@@ -50,14 +50,14 @@ public class EditorDeTexto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelAreaDeTexto = new javax.swing.JScrollPane();
+        areaDeTexto = new javax.swing.JTextArea();
         barraDeFerramentas = new javax.swing.JToolBar();
         buttonNovo = new javax.swing.JButton();
         buttonAbrir = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonCompilar = new javax.swing.JButton();
-        panelAreaDeTexto = new javax.swing.JScrollPane();
-        areaDeTexto = new javax.swing.JTextArea();
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuItemNovo = new javax.swing.JMenuItem();
@@ -72,6 +72,15 @@ public class EditorDeTexto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(908, 522));
+
+        areaDeTexto.setColumns(20);
+        areaDeTexto.setLineWrap(true);
+        areaDeTexto.setRows(5);
+        areaDeTexto.setTabSize(4);
+        areaDeTexto.setWrapStyleWord(true);
+        panelAreaDeTexto.setViewportView(areaDeTexto);
+
+        getContentPane().add(panelAreaDeTexto, java.awt.BorderLayout.CENTER);
 
         barraDeFerramentas.setRollover(true);
 
@@ -112,15 +121,6 @@ public class EditorDeTexto extends javax.swing.JFrame {
         buttonCompilar.addActionListener(listener);
 
         getContentPane().add(barraDeFerramentas, java.awt.BorderLayout.PAGE_START);
-
-        areaDeTexto.setColumns(20);
-        areaDeTexto.setLineWrap(true);
-        areaDeTexto.setRows(5);
-        areaDeTexto.setTabSize(4);
-        areaDeTexto.setWrapStyleWord(true);
-        panelAreaDeTexto.setViewportView(areaDeTexto);
-
-        getContentPane().add(panelAreaDeTexto, java.awt.BorderLayout.CENTER);
 
         menuArquivo.setText("Arquivo");
 
@@ -168,7 +168,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
 
         setJMenuBar(barraDeMenus);
 
-        pack();
+        setSize(new java.awt.Dimension(1053, 561));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
