@@ -45,7 +45,7 @@ public class Scanner {
                 leitor.rollBack();
                 lerCaracteresDeAberturaOuFechamento();
             } else {
-                throw new ErroLexico(leitor.getPosicao());
+                throw new ErroLexico(leitor.getPosicao(), "Caracter desconhecido '" + caracter + "'.");
             }
         }
         return bufferTokens;
@@ -55,7 +55,7 @@ public class Scanner {
         String lexema = "";
         while (leitor.hasNext()) {
             if (lexema.length() > 30) {
-                throw new ErroLexico(leitor.getPosicao());
+                throw new ErroLexico(leitor.getPosicao(), "Valor maior do que o permitido.");
             }
             Character caracter = leitor.proximoCaracter();
             if (!Character.isLetterOrDigit(caracter) && caracter != '_') {
@@ -72,7 +72,7 @@ public class Scanner {
         while (leitor.hasNext()) {
             Character caracter = leitor.proximoCaracter();
             if (Character.isLetter(caracter) || caracter == '_') {
-                throw new ErroLexico(leitor.getPosicao());
+                throw new ErroLexico(leitor.getPosicao(), "Caracter inválido '" + caracter + "'.");
             }
             if (!Character.isDigit(caracter)) {
                 leitor.rollBack();
@@ -81,8 +81,10 @@ public class Scanner {
             lexema += caracter;
             //Trata se o numero for maior que a quantidade permitida...
             int valorInteiro = Integer.parseInt(lexema);
-            if (valorInteiro > 32767 || valorInteiro < -32767) {
-                throw new ErroLexico(leitor.getPosicao());
+            if (valorInteiro > 32767) {
+                throw new ErroLexico(leitor.getPosicao(), "Valor maior do que 32767.");
+            } else if (valorInteiro < -32767){
+                throw new ErroLexico(leitor.getPosicao(), "Valor menor do que -32767.");
             }
         }
         return new Token(tabelaDeTokens.getCodigo("Inteiro"), lexema, leitor.getPosicao());
@@ -135,7 +137,7 @@ public class Scanner {
         while (leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
             if (lexema.length() > 255) {
-                throw new ErroLexico(leitor.getPosicao());
+                throw new ErroLexico(leitor.getPosicao(), "Quantidade de caracter superior ao permitido '255'.");
             }
             if (caracter == '\'') {
                 break;
@@ -143,7 +145,7 @@ public class Scanner {
             lexema += caracter;
         }
         if (caracter != '\'') {
-            throw new ErroLexico(leitor.getPosicao());
+            throw new ErroLexico(leitor.getPosicao(), "Esperado caracter de fechamento '\''.");
         }
         return new Token(tabelaDeTokens.getCodigo("Literal"), lexema, leitor.getPosicao());
     }
@@ -182,7 +184,7 @@ public class Scanner {
             }
         }
         if (!isFimDoComentario) {
-            throw new ErroLexico(leitor.getPosicao());
+            throw new ErroLexico(leitor.getPosicao(), "É necessário encerrar o comentário.");
         }
     }
 }

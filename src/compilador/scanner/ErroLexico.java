@@ -20,7 +20,11 @@ public class ErroLexico extends Exception {
         super(message);
     }
     
-    public ErroLexico(Posicao posicao){
-        super("Erro léxico na " + posicao.toString());
+    public ErroLexico(Posicao posicao, String descricao){
+        super("Erro léxico na " 
+                + posicao.toString()
+                + '\n'
+                + descricao
+        );
     }
 }
