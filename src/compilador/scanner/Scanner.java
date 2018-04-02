@@ -137,7 +137,7 @@ public class Scanner {
         while (leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
             if (lexema.length() > 255) {
-                throw new ErroLexico(leitor.getPosicao(), "Quantidade de caracter superior ao permitido '255'.");
+                throw new ErroLexico(leitor.getPosicao(), "Quantidade de caracteres superior ao permitido '255'.");
             }
             if (caracter == '\'') {
                 break;
