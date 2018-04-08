@@ -61,8 +61,16 @@ public class TabelaDeTokens {
         tabela.put("$", 51);
     }
 
-    public int getCodigo(String palavra){
-        return tabela.get(palavra);
+    public Token getPelaPalavra(String palavra, Posicao posicao){
+        return new Token(tabela.get(palavra), palavra, posicao);
+    }
+    
+    public Token getInteiro(String palavra, Posicao posicao){
+        return new Token(tabela.get("Inteiro"), palavra, posicao);
+    }
+    
+    public Token getLiteral(String palavra, Posicao posicao){
+        return new Token(tabela.get("Literal"), palavra, posicao);
     }
     
     public Token getIdentificador(String palavra, Posicao posicao) {
@@ -71,5 +79,9 @@ public class TabelaDeTokens {
         } else {
             return new Token(tabela.get("Identificador"), palavra, posicao);
         }
+    }
+    
+    public boolean contemToken(String palavra){
+        return tabela.containsKey(palavra);
     }
 }

@@ -5,6 +5,7 @@
  */
 package compilador.parser;
 
+import compilador.token.Token;
 import java.util.HashMap;
 
 /**
@@ -53,6 +54,10 @@ public class TabelaDeSimbolos {
         tabelaDeSimbolos.put("CONTCASE", 85);
         tabelaDeSimbolos.put("RPINTEIRO", 86);
         tabelaDeSimbolos.put("SEM EFE", 87);
+    }
+
+    public int getCodigo(Token token) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

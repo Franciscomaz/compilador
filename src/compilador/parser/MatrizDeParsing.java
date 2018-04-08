@@ -5,7 +5,6 @@
  */
 package compilador.parser;
 
-import compilador.token.TabelaDeTokens;
 import compilador.token.Token;
 
 /**
@@ -210,6 +209,6 @@ public class MatrizDeParsing {
     }
     
     public String getDerivacao(Token token){
-        return matrizDeParsing[new TabelaDeSimbolos().getCodigo(token)][new TabelaDeTokens().getCodigo(token.getLexema())];
+        return matrizDeParsing[new TabelaDeSimbolos().getCodigo(token)][token.getCodigo()];
     }
 }

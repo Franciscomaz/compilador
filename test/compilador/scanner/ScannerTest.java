@@ -81,10 +81,10 @@ public class ScannerTest {
      */
     @Test
     public void testGetInteiro() throws Exception {
-        String texto = "42\n1412a";
+        String texto = "1231";
         Scanner instance = new Scanner(new Leitor(texto));
         Stack<Token> result = instance.geTokens();
-        assertEquals("1231421412", result.pop().getLexema());
+        assertEquals("1231", result.pop().getLexema());
     }
 
     /**
