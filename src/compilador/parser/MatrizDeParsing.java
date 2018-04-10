@@ -5,6 +5,7 @@
  */
 package compilador.parser;
 
+import compilador.simbolo.Simbolo;
 import compilador.token.Token;
 
 /**
@@ -13,7 +14,7 @@ import compilador.token.Token;
  */
 public class MatrizDeParsing {
 
-    private final String[][] matrizDeParsing = new String[190][1];
+    private final String[][] matrizDeParsing = new String[190][100];
 
     public MatrizDeParsing() {
         matrizDeParsing[52][1] = "PROGRAM|IDENTIFICADOR|;|BLOCO|.";
@@ -208,7 +209,7 @@ public class MatrizDeParsing {
         matrizDeParsing[86][46] = ",|INTEIRO|RPINTEIRO";
     }
     
-    public String getDerivacao(Token token){
-        return matrizDeParsing[new TabelaDeSimbolos().getCodigo(token)][token.getCodigo()];
+    public String getDerivacao(Simbolo simbolo, Token token){
+        return matrizDeParsing[simbolo.getCodigo()][token.getCodigo()];
     }
 }

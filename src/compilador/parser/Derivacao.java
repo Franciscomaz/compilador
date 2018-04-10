@@ -3,23 +3,23 @@ package compilador.parser;
 import java.util.Stack;
 
 public class Derivacao {
-    Stack<String> derivados;
+    Stack<String> producoes;
     
     public Derivacao(String derivacao) throws Exception {
         if(derivacao.equals("NULL")){
             throw new Exception();
         }
-        derivados = new Stack<>();
+        producoes = new Stack<>();
         adicionarNaPilha(derivacao.split("\\|"));
     }
     
     private void adicionarNaPilha(String[] derivacao){
         for(String derivado : derivacao){
-            derivados.push(derivado);
+            producoes.push(derivado);
         }
     }
     
-    public String proximoDerivado(){
-        return derivados.pop();
+    public String proximaProducao(){
+        return producoes.pop();
     }
 }

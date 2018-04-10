@@ -46,7 +46,7 @@ public class Tabela extends AbstractTableModel {
         if(coluna == 0){
             return bufferTokens.get(linha).getCodigo();
         } else {
-            return bufferTokens.get(linha).getLexema();
+            return bufferTokens.get(linha).getPalavra();
         }
     }
 }

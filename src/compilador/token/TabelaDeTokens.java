@@ -2,11 +2,12 @@ package compilador.token;
 
 import compilador.scanner.Leitor.Posicao;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TabelaDeTokens {
     private final HashMap<String, Integer> tabela;
     
-    public TabelaDeTokens() {
+    public TabelaDeTokens()  {
         tabela = new HashMap<>();
         tabela.put("Program", 1);
         tabela.put("Label", 2);
@@ -61,6 +62,15 @@ public class TabelaDeTokens {
         tabela.put("$", 51);
     }
 
+    public String getPeloCodigo(int codigo){
+            return tabela.entrySet()
+              .stream()
+              .filter(entry -> entry.getValue().equals(codigo))
+              .map(Map.Entry::getKey)
+              .findFirst()
+              .get();
+    }
+    
     public Token getPelaPalavra(String palavra, Posicao posicao){
         return new Token(tabela.get(palavra), palavra, posicao);
     }
@@ -83,5 +93,9 @@ public class TabelaDeTokens {
     
     public boolean contemToken(String palavra){
         return tabela.containsKey(palavra);
+    }
+
+    public int getCodigo(String palavra) {
+        return tabela.get(palavra.substring(0,1).toUpperCase().concat(palavra.substring(1).toLowerCase()));
     }
 }

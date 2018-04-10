@@ -4,12 +4,12 @@ import compilador.scanner.Leitor.Posicao;
 
 public class Token {
     private final int codigo;
-    private final String lexema;
+    private final String palavra;
     private final Posicao posicao;
     
     public Token(int codigo, String lexema, Posicao posicao) {
         this.codigo = codigo;
-        this.lexema = lexema;
+        this.palavra = lexema;
         this.posicao = posicao;
     }
 
@@ -17,8 +17,8 @@ public class Token {
         return codigo;
     }
 
-    public String getLexema() {
-        return lexema;
+    public String getPalavra() {
+        return palavra;
     }
 
     public int getLinha(){
@@ -31,6 +31,6 @@ public class Token {
     
     @Override
     public String toString() {
-        return codigo + "|" + lexema;
+        return codigo + "|" + palavra;
     }
 }

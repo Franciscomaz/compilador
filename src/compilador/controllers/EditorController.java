@@ -7,6 +7,8 @@ package compilador.controllers;
 
 import compilador.mensagem.MensagemDeErro;
 import compilador.mensagem.MensagemDeSucesso;
+import compilador.parser.ErroSintatico;
+import compilador.parser.Parser;
 import compilador.scanner.ErroLexico;
 import compilador.scanner.Leitor;
 import compilador.scanner.Scanner;
@@ -20,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -109,9 +113,18 @@ public class EditorController implements ActionListener {
             Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
             editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
             editor.adicionarConsole(new Console(new MensagemDeSucesso()));
-        } catch (ErroLexico e) {
+            new Parser(inverterPilha(pilha)).analisar();
+        } catch (ErroLexico|ErroSintatico e) {
             editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
         }
+    }
+    
+    public Stack<Token> inverterPilha(Stack<Token> pilha){
+        Stack<Token> pilhaInvertida = new Stack<>();
+        while(!pilha.empty()){
+            pilhaInvertida.push(pilha.pop());
+        }
+        return pilhaInvertida;
     }
 
     private void sair() {

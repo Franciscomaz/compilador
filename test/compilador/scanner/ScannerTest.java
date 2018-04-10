@@ -48,7 +48,7 @@ public class ScannerTest {
         String texto = "'teste literal'";
         Scanner instance = new Scanner(new Leitor(texto));
         Stack<Token> result = instance.geTokens();
-        assertEquals("teste literal", result.pop().getLexema());
+        assertEquals("teste literal", result.pop().getPalavra());
     }
 
     /**
@@ -84,7 +84,7 @@ public class ScannerTest {
         String texto = "1231";
         Scanner instance = new Scanner(new Leitor(texto));
         Stack<Token> result = instance.geTokens();
-        assertEquals("1231", result.pop().getLexema());
+        assertEquals("1231", result.pop().getPalavra());
     }
 
     /**
@@ -96,7 +96,7 @@ public class ScannerTest {
         String texto = "_test123";
         Scanner instance = new Scanner(new Leitor(texto));
         Stack<Token> result = instance.geTokens();
-        assertEquals("_test123", result.pop().getLexema());
+        assertEquals("_test123", result.pop().getPalavra());
     }
 
     /**

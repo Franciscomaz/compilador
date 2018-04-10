@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package compilador.parser;
+package compilador.simbolo;
 
-import compilador.token.Token;
 import java.util.HashMap;
 
-/**
- *
- * @author comp15
- */
 public class TabelaDeSimbolos {
 
     private final HashMap<String, Integer> tabelaDeSimbolos;
@@ -56,9 +46,11 @@ public class TabelaDeSimbolos {
         tabelaDeSimbolos.put("SEM EFE", 87);
     }
 
-    public int getCodigo(Token token) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getCodigo(String simbolo) {
+        return tabelaDeSimbolos.get(simbolo);
     }
     
-    
+    public boolean contemSimbolo(String simbolo){
+        return tabelaDeSimbolos.containsKey(simbolo);
+    }
 }
