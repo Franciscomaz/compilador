@@ -113,7 +113,7 @@ public class EditorController implements ActionListener {
             Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
             editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
             editor.adicionarConsole(new Console(new MensagemDeSucesso()));
-            new Parser(inverterPilha(pilha)).analisar();
+            new Parser(inverterPilha((Stack)pilha.clone())).analisar();
         } catch (ErroLexico|ErroSintatico e) {
             editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
         }
