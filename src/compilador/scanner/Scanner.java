@@ -1,19 +1,17 @@
 package compilador.scanner;
 
-import compilador.token.TabelaDeTokens;
 import compilador.token.Token;
+import compilador.token.TokenFactory;
 import java.util.Stack;
 
 public class Scanner {
 
     private final Leitor leitor;
     private final Stack<Token> bufferTokens;
-    private final TabelaDeTokens tabelaDeTokens;
 
     public Scanner(Leitor leitor) {
         this.leitor = leitor;
         this.bufferTokens = new Stack<>();
-        this.tabelaDeTokens = new TabelaDeTokens();
     }
 
     public Stack<Token> geTokens() throws ErroLexico {
@@ -40,7 +38,7 @@ public class Scanner {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
             } else if (caracter.toString().matches("\\+|\\*|-|/")) {
-                bufferTokens.add(tabelaDeTokens.getPelaPalavra(caracter.toString(), leitor.getPosicao()));
+                bufferTokens.add(TokenFactory.criarToken(caracter.toString(), leitor.getPosicao()));
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
                 leitor.rollBack();
                 lerCaracteresDeAberturaOuFechamento();
@@ -64,7 +62,7 @@ public class Scanner {
             }
             lexema += caracter;
         }
-        return tabelaDeTokens.getIdentificador(lexema, leitor.getPosicao());
+        return TokenFactory.criarIdentificador(lexema, leitor.getPosicao());
     }
 
     private Token lerDigito() throws ErroLexico {
@@ -87,7 +85,7 @@ public class Scanner {
                 throw new ErroLexico(leitor.getPosicao(), "Valor menor do que -32767.");
             }
         }
-        return tabelaDeTokens.getInteiro(lexema, leitor.getPosicao());
+        return TokenFactory.criarInteiro(lexema, leitor.getPosicao());
     }
 
     private Token lerOperadorRelacional() {
@@ -114,7 +112,7 @@ public class Scanner {
                     break;
             }
         }
-        return tabelaDeTokens.getPelaPalavra(lexema, leitor.getPosicao());
+        return TokenFactory.criarToken(lexema, leitor.getPosicao());
     }
 
     private Token lerCaracteresEspeciais() {
@@ -128,7 +126,7 @@ public class Scanner {
                 leitor.rollBack();
             }
         }
-        return tabelaDeTokens.getPelaPalavra(lexema, leitor.getPosicao());
+        return TokenFactory.criarToken(lexema, leitor.getPosicao());
     }
 
     private Token lerLiteral() throws ErroLexico {
@@ -147,7 +145,7 @@ public class Scanner {
         if (caracter != '\'') {
             throw new ErroLexico(leitor.getPosicao(), "Esperado caracter de fechamento '\''.");
         }
-        return tabelaDeTokens.getLiteral(lexema, leitor.getPosicao());
+        return TokenFactory.criarLiteral(lexema, leitor.getPosicao());
     }
 
     private Token lerAtribuidor() {
@@ -158,7 +156,7 @@ public class Scanner {
         } else {
             lexema += caracter;
         }
-        return tabelaDeTokens.getPelaPalavra(lexema, leitor.getPosicao());
+        return TokenFactory.criarToken(lexema, leitor.getPosicao());
     }
 
     private void lerCaracteresDeAberturaOuFechamento() throws ErroLexico {
@@ -167,7 +165,7 @@ public class Scanner {
             lerComentario();
             return;
         }
-        bufferTokens.push(tabelaDeTokens.getPelaPalavra(lexema, leitor.getPosicao()));
+        bufferTokens.push(TokenFactory.criarToken(lexema, leitor.getPosicao()));
         leitor.rollBack();
     }
 

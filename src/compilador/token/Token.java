@@ -1,24 +1,23 @@
 package compilador.token;
 
 import compilador.scanner.Leitor.Posicao;
+import compilador.simbolo.Simbolo;
 
 public class Token {
-    private final int codigo;
-    private final String palavra;
+    private final Simbolo simbolo;
     private final Posicao posicao;
     
-    public Token(int codigo, String lexema, Posicao posicao) {
-        this.codigo = codigo;
-        this.palavra = lexema;
+    public Token(Simbolo simbolo, Posicao posicao) {
+        this.simbolo = simbolo;
         this.posicao = posicao;
     }
 
     public int getCodigo() {
-        return codigo;
+        return simbolo.getCodigo();
     }
 
     public String getPalavra() {
-        return palavra;
+        return simbolo.getNome();
     }
 
     public int getLinha(){
@@ -31,6 +30,6 @@ public class Token {
     
     @Override
     public String toString() {
-        return codigo + "|" + palavra;
+        return getCodigo() + "|" + getPalavra();
     }
 }
