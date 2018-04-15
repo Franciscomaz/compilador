@@ -118,7 +118,7 @@ public class Scanner {
     private Token lerCaracteresEspeciais() {
         Character caracter = leitor.proximoCaracter();
         String lexema = caracter.toString();
-        if (!caracter.toString().matches("$|;|,") && leitor.hasNext()) {
+        if (caracter == '.' && leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
             if (caracter == '.') {
                 lexema += caracter;

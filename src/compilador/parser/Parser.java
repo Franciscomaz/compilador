@@ -17,7 +17,7 @@ public class Parser {
     public void analisar() throws ErroSintatico {
         while (!tokens.empty()) {
             final Token token = tokens.peek();
-            final Simbolo simbolo = derivacao.proximoSimbolo();
+            final Simbolo simbolo = derivacao.proximaProducao();
             if (simbolo.isTerminal()) {
                 if (simbolo.getCodigo() == token.getCodigo()) {
                     tokens.pop();

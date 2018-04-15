@@ -141,6 +141,7 @@
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
             <Property name="tabSize" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Program teste;&#xa;Begin&#xa;End."/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>

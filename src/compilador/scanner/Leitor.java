@@ -12,6 +12,7 @@ import java.util.Stack;
  * @author Chicom
  */
 public class Leitor {
+
     private int posicao = -1;
     private final String texto;
     private final Stack<Integer> pilha;
@@ -27,7 +28,7 @@ public class Leitor {
     }
 
     public void rollBack() {
-        if (--posicao > -1 && texto.charAt(posicao) == '\n') {
+        if (texto.charAt(posicao--) == '\n') {
             pilha.pop();
         } else {
             pilha.push(pilha.pop() - 1);
@@ -51,6 +52,7 @@ public class Leitor {
     }
 
     public class Posicao {
+
         private final int linha;
         private final int coluna;
 

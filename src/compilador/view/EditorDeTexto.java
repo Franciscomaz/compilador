@@ -77,6 +77,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
         areaDeTexto.setLineWrap(true);
         areaDeTexto.setRows(5);
         areaDeTexto.setTabSize(4);
+        areaDeTexto.setText("Program teste;\nBegin\nEnd.");
         areaDeTexto.setWrapStyleWord(true);
         panelAreaDeTexto.setViewportView(areaDeTexto);
 
