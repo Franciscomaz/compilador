@@ -37,13 +37,13 @@ public class Scanner {
             } else if (caracter == ':') {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
-            } else if (caracter.toString().matches("\\+|\\*|-|/")) {
+            } else if (caracter.toString().matches("\\+|\\*|\\-|/")) {
                 bufferTokens.add(TokenFactory.criarToken(caracter.toString(), leitor.getPosicao()));
             } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
                 leitor.rollBack();
                 lerCaracteresDeAberturaOuFechamento();
             } else {
-                throw new ErroLexico(leitor.getPosicao(), "Caracter desconhecido '" + caracter + "'.");
+                throw new ErroLexico(leitor.getPosicao(), "Carácter desconhecido '" + caracter + "'.");
             }
         }
         return bufferTokens;
@@ -70,7 +70,7 @@ public class Scanner {
         while (leitor.hasNext()) {
             Character caracter = leitor.proximoCaracter();
             if (Character.isLetter(caracter) || caracter == '_') {
-                throw new ErroLexico(leitor.getPosicao(), "Caracter inválido '" + caracter + "'.");
+                throw new ErroLexico(leitor.getPosicao(), "Carácter inválido '" + caracter + "'.");
             }
             if (!Character.isDigit(caracter)) {
                 leitor.rollBack();
@@ -135,7 +135,7 @@ public class Scanner {
         while (leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
             if (lexema.length() > 255) {
-                throw new ErroLexico(leitor.getPosicao(), "Quantidade de caracteres superior ao permitido '255'.");
+                throw new ErroLexico(leitor.getPosicao(), "Quantidade de carácteres superior ao permitido '255'.");
             }
             if (caracter == '\'') {
                 break;
@@ -143,7 +143,7 @@ public class Scanner {
             lexema += caracter;
         }
         if (caracter != '\'') {
-            throw new ErroLexico(leitor.getPosicao(), "Esperado caracter de fechamento '\''.");
+            throw new ErroLexico(leitor.getPosicao(), "Esperado carácter de fechamento '\''.");
         }
         return TokenFactory.criarLiteral(lexema, leitor.getPosicao());
     }

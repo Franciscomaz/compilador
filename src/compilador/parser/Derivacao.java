@@ -25,7 +25,6 @@ public class Derivacao {
             throw new ErroSintatico(token);
         }
         if (derivacao.equals("NULL")) {
-            removerProducao();
             return;
         }
         adicionarProducoes(separarEmProducoes(derivacao));
