@@ -12,14 +12,18 @@ public class TabelaDeSimbolos {
         naoTerminais = TabelaNaoTerminais.getInstance();
     }
     
-    public Simbolo getSimbolo(String palavra) {
-        return new Simbolo(getCodigo(palavra), palavra);
+    public Simbolo getSimbolo(String simbolo) {
+        return new Simbolo(getCodigo(simbolo), simbolo);
     }
 
-    public Simbolo getSimboloTerminal(String palavra) {
-        return new Simbolo(terminais.get(palavra), palavra);
+    public Simbolo getSimboloTerminal(String simbolo) {
+        return new Simbolo(terminais.get(simbolo), simbolo);
     }
-
+    
+    public Simbolo getSimboloComValor(String simbolo, String valor){
+        return new Simbolo(terminais.get(simbolo), valor);
+    }
+    
     public int getCodigo(String simbolo) {
         return terminais.containsKey(simbolo)
                 ? terminais.get(simbolo)
