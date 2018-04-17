@@ -48,10 +48,11 @@ public class MatrizDeParsing {
         matrizDeParsing[60][25] = "LID|:|TIPO|;|LDVAR";
         matrizDeParsing[61][8] = "Integer";
         matrizDeParsing[61][9] = "Array|[|Inteiro|..|Inteiro|]|Of|Integer";
-        matrizDeParsing[62][5] = "Procedure|Identificador|;|BLOCO|;|DCLPROC";
+        matrizDeParsing[62][5] = "Procedure|Identificador|DEFPAR|;|BLOCO|;|DCLPROC";
         matrizDeParsing[62][6] = "NULL";
         matrizDeParsing[63][36] = "(|LID|:|Integer|)";
         matrizDeParsing[63][39] = "NULL";
+        matrizDeParsing[63][47] = "NULL";
         matrizDeParsing[64][6] = "Begin|COMANDO|REPCOMANDO|End";
         matrizDeParsing[65][7] = "NULL";
         matrizDeParsing[65][47] = ";|COMANDO|REPCOMANDO";

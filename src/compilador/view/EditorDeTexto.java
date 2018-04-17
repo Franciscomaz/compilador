@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package compilador.view;
 
+import compilador.view.custom.TextLineNumber;
 import compilador.controllers.EditorController;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -15,32 +12,35 @@ import javax.swing.UIManager;
  * @author comp2
  */
 public class EditorDeTexto extends javax.swing.JFrame {
-    ActionListener listener = new EditorController(this);
-    
+
+    private final ActionListener listener = new EditorController(this);
+
     public EditorDeTexto() {
         initComponents();
     }
 
-    public void adicionarTabela(TabelaView tabela){
+    public void adicionarTabela(TabelaView tabela) {
         adicionarComponente(tabela, java.awt.BorderLayout.EAST);
     }
-    
-    public void adicionarConsole(Console console){
+
+    public void adicionarConsole(Console console) {
         adicionarComponente(console, java.awt.BorderLayout.SOUTH);
     }
-    
-    private void adicionarComponente(Component componente, String posicao){
+
+    private void adicionarComponente(Component componente, String posicao) {
         removerComponente(componente);
-        getContentPane().add(componente, posicao);    
+        getContentPane().add(componente, posicao);
         revalidate();
     }
-    
-    private void removerComponente(Component component){
-        for(Component c : getContentPane().getComponents()){
-            if(c.getClass().equals(component.getClass()))
+
+    private void removerComponente(Component component) {
+        for (Component c : getContentPane().getComponents()) {
+            if (c.getClass().equals(component.getClass())) {
                 getContentPane().remove(c);
+            }
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,14 +50,14 @@ public class EditorDeTexto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelAreaDeTexto = new javax.swing.JScrollPane();
-        areaDeTexto = new javax.swing.JTextArea();
         barraDeFerramentas = new javax.swing.JToolBar();
         buttonNovo = new javax.swing.JButton();
         buttonAbrir = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         buttonCompilar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaDeTexto = new javax.swing.JTextPane();
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuItemNovo = new javax.swing.JMenuItem();
@@ -72,16 +72,6 @@ public class EditorDeTexto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(908, 522));
-
-        areaDeTexto.setColumns(20);
-        areaDeTexto.setLineWrap(true);
-        areaDeTexto.setRows(5);
-        areaDeTexto.setTabSize(4);
-        areaDeTexto.setText("Program teste;\nBegin\nEnd.");
-        areaDeTexto.setWrapStyleWord(true);
-        panelAreaDeTexto.setViewportView(areaDeTexto);
-
-        getContentPane().add(panelAreaDeTexto, java.awt.BorderLayout.CENTER);
 
         barraDeFerramentas.setRollover(true);
 
@@ -122,6 +112,11 @@ public class EditorDeTexto extends javax.swing.JFrame {
         buttonCompilar.addActionListener(listener);
 
         getContentPane().add(barraDeFerramentas, java.awt.BorderLayout.PAGE_START);
+
+        jScrollPane1.setViewportView(areaDeTexto);
+        jScrollPane1.setRowHeaderView(new TextLineNumber(areaDeTexto));
+
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         menuArquivo.setText("Arquivo");
 
@@ -169,7 +164,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
 
         setJMenuBar(barraDeMenus);
 
-        setSize(new java.awt.Dimension(1053, 561));
+        setSize(new java.awt.Dimension(1070, 561));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,7 +183,7 @@ public class EditorDeTexto extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(EditorDeTexto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -197,22 +192,23 @@ public class EditorDeTexto extends javax.swing.JFrame {
         });
     }
 
-    public String getTexto(){
+    public String getTexto() {
         return areaDeTexto.getText();
     }
 
-    public void setTexto(String texto){
+    public void setTexto(String texto) {
         areaDeTexto.setText(texto);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea areaDeTexto;
+    private javax.swing.JTextPane areaDeTexto;
     private javax.swing.JToolBar barraDeFerramentas;
     private javax.swing.JMenuBar barraDeMenus;
     private javax.swing.JButton buttonAbrir;
     private javax.swing.JButton buttonCompilar;
     private javax.swing.JButton buttonNovo;
     private javax.swing.JButton buttonSalvar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
@@ -224,6 +220,5 @@ public class EditorDeTexto extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemNovo;
     private javax.swing.JMenuItem menuItemSalvar;
     private javax.swing.JMenuItem menuItemSalvarComo;
-    private javax.swing.JScrollPane panelAreaDeTexto;
     // End of variables declaration//GEN-END:variables
 }
