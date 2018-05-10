@@ -20,4 +20,16 @@ public class Simbolo {
     public boolean isTerminal(){
         return codigo < 52;
     }
+    
+    public boolean isCategoria(){
+        return codigo >= 1 || codigo <= 5;
+    }
+    
+    public boolean isIdentificador(){
+        return codigo == 25;
+    }
+    
+    public boolean isTipo(){
+        return codigo == 8 || codigo == 9;
+    }
 }
