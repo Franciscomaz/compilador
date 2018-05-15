@@ -44,9 +44,9 @@ public class Tabela extends AbstractTableModel {
     @Override
     public Object getValueAt(int linha, int coluna) {
         if(coluna == 0){
-            return bufferTokens.get(linha).getCodigo();
+            return bufferTokens.get(linha).codigo();
         } else {
-            return bufferTokens.get(linha).getPalavra();
+            return bufferTokens.get(linha).palavra();
         }
     }
 }

@@ -61,17 +61,17 @@ public class Leitor {
             this.coluna = posicao.peek();
         }
 
-        public int getLinha() {
+        public int linha() {
             return linha;
         }
 
-        public int getColuna() {
+        public int coluna() {
             return coluna;
         }
 
         @Override
         public String toString() {
-            return "linha " + getLinha() + ", coluna " + getColuna() + ".";
+            return "linha " + linha() + ", coluna " + coluna() + ".";
         }
     }
 }

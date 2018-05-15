@@ -6,30 +6,42 @@ import compilador.simbolo.Simbolo;
 public class Token {
     private final Simbolo simbolo;
     private final Posicao posicao;
-    
+
     public Token(Simbolo simbolo, Posicao posicao) {
         this.simbolo = simbolo;
         this.posicao = posicao;
     }
 
-    public int getCodigo() {
-        return simbolo.getCodigo();
+    public int codigo() {
+        return simbolo.codigo();
     }
 
-    public String getPalavra() {
-        return simbolo.getNome();
+    public String palavra() {
+        return simbolo.nome();
     }
 
-    public int getLinha(){
-        return posicao.getLinha();
+    public int linha() {
+        return posicao.linha();
     }
-    
-    public int getColuna(){
-        return posicao.getColuna();
+
+    public int coluna() {
+        return posicao.coluna();
     }
-    
+
+    public boolean isCategoria() {
+        return codigo() >= 1 && codigo() <= 5;
+    }
+
+    public boolean isIdentificador() {
+        return codigo() == 25;
+    }
+
+    public boolean isTipo() {
+        return codigo() == 8 || codigo() == 9;
+    }
+
     @Override
     public String toString() {
-        return getCodigo() + "|" + getPalavra();
+        return codigo() + "|" + palavra();
     }
 }

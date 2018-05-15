@@ -11,67 +11,67 @@ public class TabelaDeSimbolos {
         terminais = TabelaTerminais.getInstance();
         naoTerminais = TabelaNaoTerminais.getInstance();
     }
-    
+
     public Simbolo getSimbolo(String simbolo) {
-        return new Simbolo(getCodigo(simbolo), simbolo);
+        return new Simbolo(codigo(simbolo.toUpperCase()), simbolo.toUpperCase());
     }
 
     public Simbolo getSimboloTerminal(String simbolo) {
-        return new Simbolo(terminais.get(simbolo), simbolo);
+        return new Simbolo(terminais.get(simbolo.toUpperCase()), simbolo.toUpperCase());
     }
-    
-    public Simbolo getSimboloComValor(String simbolo, String valor){
-        return new Simbolo(terminais.get(simbolo), valor);
+
+    public Simbolo getSimboloComValor(String simbolo, String valor) {
+        return new Simbolo(terminais.get(simbolo.toUpperCase()), valor.toUpperCase());
     }
-    
-    public int getCodigo(String simbolo) {
-        return terminais.containsKey(simbolo)
+
+    private int codigo(String simbolo) {
+        return terminais.containsKey(simbolo.toUpperCase())
                 ? terminais.get(simbolo)
                 : naoTerminais.get(simbolo);
     }
 
     public boolean contemTerminal(String terminal) {
-        return terminais.containsKey(terminal);
+        return terminais.containsKey(terminal.toUpperCase());
     }
 
     private static class TabelaTerminais {
-        
+
         private static HashMap<String, Integer> instance;
 
-        public static HashMap<String, Integer> getInstance() {
+        static HashMap<String, Integer> getInstance() {
             if (instance != null) {
                 return instance;
             }
             instance = new HashMap<>();
-            instance.put("Program", 1);
-            instance.put("Label", 2);
-            instance.put("Const", 3);
-            instance.put("Var", 4);
-            instance.put("Procedure", 5);
-            instance.put("Begin", 6);
-            instance.put("End", 7);
-            instance.put("Integer", 8);
-            instance.put("Array", 9);
-            instance.put("Of", 10);
-            instance.put("Call", 11);
-            instance.put("Goto", 12);
-            instance.put("If", 13);
-            instance.put("Then", 14);
-            instance.put("Else", 15);
-            instance.put("While", 16);
-            instance.put("Do", 17);
-            instance.put("Repeat", 18);
-            instance.put("Until", 19);
-            instance.put("Readln", 20);
-            instance.put("Writeln", 21);
-            instance.put("Or", 22);
-            instance.put("And", 23);
-            instance.put("Not", 24);
-            instance.put("Identificador", 25);
-            instance.put("Inteiro", 26);
-            instance.put("For", 27);
-            instance.put("To", 28);
-            instance.put("Case", 29);
+            instance.put("PROGRAM", 1);
+            instance.put("LABEL", 2);
+            instance.put("CONST", 3);
+            instance.put("VAR", 4);
+            instance.put("PROCEDURE", 5);
+            instance.put("BEGIN", 6);
+            instance.put("END", 7);
+            instance.put("INTEGER", 8);
+            instance.put("ARRAY", 9);
+            instance.put("OF", 10);
+            instance.put("CALL", 11);
+            instance.put("GOTO", 12);
+            instance.put("IF", 13);
+            instance.put("THEN", 14);
+            instance.put("ELSE", 15);
+            instance.put("WHILE", 16);
+            instance.put("DO", 17);
+            instance.put("REPEAT", 18);
+            instance.put("UNTIL", 19);
+            instance.put("READLN", 20);
+            instance.put("WRITELN", 21);
+            instance.put("OR", 22);
+            instance.put("AND", 23);
+            instance.put("NOT", 24);
+            instance.put("IDENTIFICADOR", 25);
+            instance.put("INTEIRO", 26);
+            instance.put("FOR", 27);
+            instance.put("TO", 28);
+            instance.put("CASE", 29);
             instance.put("+", 30);
             instance.put("-", 31);
             instance.put("*", 32);
@@ -90,7 +90,7 @@ public class TabelaDeSimbolos {
             instance.put("<>", 45);
             instance.put(",", 46);
             instance.put(";", 47);
-            instance.put("Literal", 48);
+            instance.put("LITERAL", 48);
             instance.put(".", 49);
             instance.put("..", 50);
             instance.put("$", 51);
@@ -102,7 +102,7 @@ public class TabelaDeSimbolos {
 
         private static HashMap<String, Integer> instance;
 
-        public static HashMap<String, Integer> getInstance() {
+        static HashMap<String, Integer> getInstance() {
             if (instance != null) {
                 return instance;
             }

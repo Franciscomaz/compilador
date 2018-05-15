@@ -2,6 +2,8 @@ package compilador.scanner;
 
 import compilador.token.Token;
 import compilador.token.TokenFactory;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Stack;
 
 public class Scanner {
@@ -50,7 +52,7 @@ public class Scanner {
     }
 
     private Token lerIdentificador() throws ErroLexico {
-        String lexema = "";
+        StringBuilder lexema = new StringBuilder();
         while (leitor.hasNext()) {
             if (lexema.length() > 30) {
                 throw new ErroLexico(leitor.getPosicao(), "Valor maior do que o permitido.");
@@ -60,9 +62,9 @@ public class Scanner {
                 leitor.rollBack();
                 break;
             }
-            lexema += caracter;
+            lexema.append(caracter);
         }
-        return TokenFactory.criarIdentificador(lexema, leitor.getPosicao());
+        return TokenFactory.criarIdentificador(lexema.toString(), leitor.getPosicao());
     }
 
     private Token lerDigito() throws ErroLexico {
@@ -130,7 +132,7 @@ public class Scanner {
     }
 
     private Token lerLiteral() throws ErroLexico {
-        String lexema = "";
+        StringBuilder lexema = new StringBuilder();
         Character caracter = null;
         while (leitor.hasNext()) {
             caracter = leitor.proximoCaracter();
@@ -140,12 +142,12 @@ public class Scanner {
             if (caracter == '\'') {
                 break;
             }
-            lexema += caracter;
+            lexema.append(caracter);
         }
         if (caracter != '\'') {
             throw new ErroLexico(leitor.getPosicao(), "Esperado carácter de fechamento '\''.");
         }
-        return TokenFactory.criarLiteral(lexema, leitor.getPosicao());
+        return TokenFactory.criarLiteral(lexema.toString(), leitor.getPosicao());
     }
 
     private Token lerAtribuidor() {

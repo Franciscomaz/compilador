@@ -12,6 +12,7 @@ import compilador.parser.Parser;
 import compilador.scanner.ErroLexico;
 import compilador.scanner.Leitor;
 import compilador.scanner.Scanner;
+import compilador.semantico.ErroSemantico;
 import compilador.token.Token;
 import compilador.utils.ArquivoUtils;
 import compilador.view.EditorDeTexto;
@@ -114,7 +115,7 @@ public class EditorController implements ActionListener {
             editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
             editor.adicionarConsole(new Console(new MensagemDeSucesso()));
             new Parser(inverterPilha((Stack)pilha.clone())).analisar();
-        } catch (ErroLexico|ErroSintatico e) {
+        } catch (ErroLexico|ErroSintatico|ErroSemantico e) {
             editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
         }
     }

@@ -211,6 +211,6 @@ public class MatrizDeParsing {
     }
     
     public String getDerivacao(Simbolo simbolo, Token token){
-        return matrizDeParsing[simbolo.getCodigo()][token.getCodigo()];
+        return matrizDeParsing[simbolo.codigo()][token.codigo()];
     }
 }

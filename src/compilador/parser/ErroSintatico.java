@@ -16,7 +16,7 @@ public class ErroSintatico extends Exception{
     }
 
     public ErroSintatico(Token token) {
-        super("Erro sintático linha " + token.getLinha() + ", coluna " + token.getColuna() + ": '" + token + "'");
+        super("Erro sintático linha " + token.linha() + ", coluna " + token.coluna() + ": '" + token + "'");
     }    
     
     public ErroSintatico(String message) {
