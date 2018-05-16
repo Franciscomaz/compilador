@@ -21,7 +21,7 @@ public class TabelaDeSimbolos {
     }
 
     public Simbolo getSimboloComValor(String simbolo, String valor) {
-        return new Simbolo(terminais.get(simbolo.toUpperCase()), valor.toUpperCase());
+        return new Simbolo(terminais.get(simbolo.toUpperCase()), valor);
     }
 
     private int codigo(String simbolo) {

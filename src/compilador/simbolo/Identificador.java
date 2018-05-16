@@ -41,15 +41,22 @@ public class Identificador extends Simbolo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Identificador that = (Identificador) o;
-        return nivel == that.nivel &&
-                Objects.equals(tipo, that.tipo) &&
-                Objects.equals(categoria, that.categoria) &&
-                Objects.equals(nome(), that.nome()) &&
-                Objects.equals(codigo(), that.codigo());
+        return this.nivel >= that.nivel &&
+                Objects.equals(this.nome(), that.nome()) &&
+                Objects.equals(this.categoria(), that.categoria());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nivel, tipo, categoria);
+        return Objects.hash(nivel, nome());
+    }
+
+    @Override
+    public String toString() {
+        return "Identificador{" +
+                "nivel=" + nivel +
+                ", tipo='" + tipo + '\'' +
+                ", categoria='" + categoria + '\'' +
+                '}';
     }
 }
