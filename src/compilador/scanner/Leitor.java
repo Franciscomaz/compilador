@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compilador.scanner;
 
 import java.util.Stack;
 
-/**
- *
- * @author Chicom
- */
 public class Leitor {
 
     private int posicao = -1;
@@ -19,15 +10,15 @@ public class Leitor {
 
     public Leitor(String texto) {
         this.texto = texto;
-        pilha = new Stack<>();
-        pilha.push(0);
+        this.pilha = new Stack<>();
+        this.pilha.push(0);
     }
 
-    public Posicao getPosicao() {
+    Posicao posicao() {
         return new Posicao(pilha);
     }
 
-    public void rollBack() {
+    void rollBack() {
         if (texto.charAt(posicao--) == '\n') {
             pilha.pop();
         } else {
@@ -35,11 +26,11 @@ public class Leitor {
         }
     }
 
-    public boolean hasNext() {
+    boolean hasNext() {
         return texto.length() > posicao + 1;
     }
 
-    public Character proximoCaracter() {
+    Character proximoCarater() {
         if (!hasNext()) {
             return null;
         }
@@ -61,17 +52,17 @@ public class Leitor {
             this.coluna = posicao.peek();
         }
 
-        public int linha() {
+        int linha() {
             return linha;
         }
 
-        public int coluna() {
+        int coluna() {
             return coluna;
         }
 
         @Override
         public String toString() {
-            return "linha " + linha() + ", coluna " + coluna() + ".";
+            return "Linha " + linha() + ", coluna " + coluna() + ".";
         }
     }
 }

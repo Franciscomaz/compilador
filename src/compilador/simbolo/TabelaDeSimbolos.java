@@ -8,24 +8,24 @@ public class TabelaDeSimbolos {
     private final HashMap<String, Integer> naoTerminais;
 
     public TabelaDeSimbolos() {
-        terminais = TabelaTerminais.getInstance();
-        naoTerminais = TabelaNaoTerminais.getInstance();
+        terminais = TabelaTerminais.instance();
+        naoTerminais = TabelaNaoTerminais.instance();
     }
 
-    public Simbolo getSimbolo(String simbolo) {
+    public Simbolo simbolo(String simbolo) {
         return new Simbolo(codigo(simbolo.toUpperCase()), simbolo.toUpperCase());
     }
 
-    public Simbolo getSimboloTerminal(String simbolo) {
+    public Simbolo terminal(String simbolo) {
         return new Simbolo(terminais.get(simbolo.toUpperCase()), simbolo.toUpperCase());
     }
 
-    public Simbolo getSimboloComValor(String simbolo, String valor) {
+    public Simbolo terminalComValor(String simbolo, String valor) {
         return new Simbolo(terminais.get(simbolo.toUpperCase()), valor);
     }
 
     private int codigo(String simbolo) {
-        return terminais.containsKey(simbolo.toUpperCase())
+        return terminais.containsKey(simbolo)
                 ? terminais.get(simbolo)
                 : naoTerminais.get(simbolo);
     }
@@ -38,7 +38,7 @@ public class TabelaDeSimbolos {
 
         private static HashMap<String, Integer> instance;
 
-        static HashMap<String, Integer> getInstance() {
+        static HashMap<String, Integer> instance() {
             if (instance != null) {
                 return instance;
             }
@@ -102,7 +102,7 @@ public class TabelaDeSimbolos {
 
         private static HashMap<String, Integer> instance;
 
-        static HashMap<String, Integer> getInstance() {
+        static HashMap<String, Integer> instance() {
             if (instance != null) {
                 return instance;
             }

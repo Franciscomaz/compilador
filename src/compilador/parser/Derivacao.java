@@ -31,11 +31,11 @@ public class Derivacao {
     }
 
     public Simbolo proximaProducao() {
-        return tabelaDeSimbolos.getSimbolo(pilhaDeProducoes.peek());
+        return tabelaDeSimbolos.simbolo(pilhaDeProducoes.peek());
     }
 
     public Simbolo removerProducao() {
-        return tabelaDeSimbolos.getSimbolo(pilhaDeProducoes.pop());
+        return tabelaDeSimbolos.simbolo(pilhaDeProducoes.pop());
     }
 
     public boolean isEmpty() {

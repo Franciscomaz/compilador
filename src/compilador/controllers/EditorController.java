@@ -23,8 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -120,8 +118,8 @@ public class EditorController implements ActionListener {
         }
     }
     
-    public Stack<Token> inverterPilha(Stack<Token> pilha){
-        Stack<Token> pilhaInvertida = new Stack<>();
+    private Stack<Token> inverterPilha(Stack<Token> pilha){
+        final Stack<Token> pilhaInvertida = new Stack<>();
         while(!pilha.empty()){
             pilhaInvertida.push(pilha.pop());
         }

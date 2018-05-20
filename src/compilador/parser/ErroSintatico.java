@@ -12,14 +12,11 @@ import compilador.token.Token;
  * @author comp15
  */
 public class ErroSintatico extends Exception{
-    public ErroSintatico() {
-    }
-
-    public ErroSintatico(Token token) {
-        super("Erro sintático linha " + token.linha() + ", coluna " + token.coluna() + ": '" + token + "'");
+    ErroSintatico(Token token) {
+        super("Erro sintático: " + token + "\n" + token.posicao());
     }    
     
-    public ErroSintatico(String message) {
+    ErroSintatico(String message) {
         super(message);
     }
 }

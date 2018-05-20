@@ -20,12 +20,8 @@ public class Token {
         return simbolo.nome();
     }
 
-    public int linha() {
-        return posicao.linha();
-    }
-
-    public int coluna() {
-        return posicao.coluna();
+    public Posicao posicao(){
+        return posicao;
     }
 
     public boolean isCategoria() {

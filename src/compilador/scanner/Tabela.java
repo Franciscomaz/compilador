@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compilador.scanner;
 
 import compilador.token.Token;
@@ -11,10 +6,6 @@ import java.util.List;
 import java.util.Stack;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author Francisco
- */
 public class Tabela extends AbstractTableModel {
     private final Stack<Token> bufferTokens;
     private final List<String> titulo;

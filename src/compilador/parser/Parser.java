@@ -36,8 +36,7 @@ public class Parser {
             }
         }
         if (!tokens.empty() || !derivacao.isEmpty()) {
-            throw new ErroSintatico("Erro sintatico");
+            throw new ErroSintatico("Erro sintático.");
         }
-        System.out.println("Compilado com sucesso.");
     }
 }

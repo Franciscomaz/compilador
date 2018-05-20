@@ -2,7 +2,6 @@ package compilador.scanner;
 
 import compilador.token.Token;
 import compilador.token.TokenFactory;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Stack;
 
@@ -18,34 +17,34 @@ public class Scanner {
 
     public Stack<Token> geTokens() throws ErroLexico {
         while (leitor.hasNext()) {
-            Character caracter = leitor.proximoCaracter();
-            if (Character.isWhitespace(caracter)) {
+            final Character carater = leitor.proximoCarater();
+            if (Character.isWhitespace(carater)) {
                 continue;
             }
-            if (Character.isLetter(caracter) || caracter == '_') {
+            if (Character.isLetter(carater) || carater == '_') {
                 leitor.rollBack();
                 bufferTokens.add(lerIdentificador());
-            } else if (Character.isDigit(caracter)) {
+            } else if (Character.isDigit(carater)) {
                 leitor.rollBack();
                 bufferTokens.add(lerDigito());
-            } else if (caracter.toString().matches("<|>|=")) {
+            } else if (carater.toString().matches("[<>=]")) {
                 leitor.rollBack();
                 bufferTokens.add(lerOperadorRelacional());
-            } else if (caracter.toString().matches("$|;|,|\\.")) {
+            } else if (carater.toString().matches("$|;|,|\\.")) {
                 leitor.rollBack();
                 bufferTokens.add(lerCaracteresEspeciais());
-            } else if (caracter == '\'') {
+            } else if (carater == '\'') {
                 bufferTokens.add(lerLiteral());
-            } else if (caracter == ':') {
+            } else if (carater == ':') {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
-            } else if (caracter.toString().matches("\\+|\\*|\\-|/")) {
-                bufferTokens.add(TokenFactory.criarToken(caracter.toString(), leitor.getPosicao()));
-            } else if (caracter.toString().matches("\\(|\\)|\\[|\\]")) {
+            } else if (carater.toString().matches("[+*-]")) {
+                bufferTokens.add(TokenFactory.criar(carater.toString(), leitor.posicao()));
+            } else if (carater.toString().matches("[()\\[\\]]")) {
                 leitor.rollBack();
                 lerCaracteresDeAberturaOuFechamento();
             } else {
-                throw new ErroLexico(leitor.getPosicao(), "Carácter desconhecido '" + caracter + "'.");
+                throw new ErroLexico(leitor.posicao(), "Caráter desconhecido '" + carater + "'.");
             }
         }
         return bufferTokens;
@@ -55,128 +54,119 @@ public class Scanner {
         StringBuilder lexema = new StringBuilder();
         while (leitor.hasNext()) {
             if (lexema.length() > 30) {
-                throw new ErroLexico(leitor.getPosicao(), "Valor maior do que o permitido.");
+                throw new ErroLexico(leitor.posicao(), "Quantidade de caracteres superior ao permitido[30].");
             }
-            Character caracter = leitor.proximoCaracter();
-            if (!Character.isLetterOrDigit(caracter) && caracter != '_') {
+            Character carater = leitor.proximoCarater();
+            if (!Character.isLetterOrDigit(carater) && carater != '_') {
                 leitor.rollBack();
                 break;
             }
-            lexema.append(caracter);
+            lexema.append(carater);
         }
-        return TokenFactory.criarIdentificador(lexema.toString(), leitor.getPosicao());
+        return TokenFactory.criarIdentificador(lexema.toString(), leitor.posicao());
     }
 
     private Token lerDigito() throws ErroLexico {
-        String lexema = "";
+        var lexema = new StringBuilder();
         while (leitor.hasNext()) {
-            Character caracter = leitor.proximoCaracter();
-            if (Character.isLetter(caracter) || caracter == '_') {
-                throw new ErroLexico(leitor.getPosicao(), "Carácter inválido '" + caracter + "'.");
+            Character carater = leitor.proximoCarater();
+            if (Character.isLetter(carater) || carater == '_') {
+                throw new ErroLexico(leitor.posicao(), "Caráter inválido '" + carater + "'.");
             }
-            if (!Character.isDigit(caracter)) {
+            if (!Character.isDigit(carater)) {
                 leitor.rollBack();
                 break;
             }
-            lexema += caracter;
-            //Trata se o numero for maior que a quantidade permitida...
-            int valorInteiro = Integer.parseInt(lexema);
-            if (valorInteiro > 32767) {
-                throw new ErroLexico(leitor.getPosicao(), "Valor maior do que 32767.");
-            } else if (valorInteiro < -32767){
-                throw new ErroLexico(leitor.getPosicao(), "Valor menor do que -32767.");
-            }
+            lexema.append(carater);
         }
-        return TokenFactory.criarInteiro(lexema, leitor.getPosicao());
+        return TokenFactory.criarInteiro(lexema.toString(), leitor.posicao());
     }
 
     private Token lerOperadorRelacional() {
-        Character caracter = leitor.proximoCaracter();
-        String lexema = caracter.toString();
-        if (caracter == '>' && leitor.hasNext()) {
-            caracter = leitor.proximoCaracter();
-            if (caracter == '=') {
-                lexema += caracter;
+        var lexema = new StringBuilder(leitor.proximoCarater().toString());
+        if (lexema.charAt(0) == '>' && leitor.hasNext()) {
+            Character carater = leitor.proximoCarater();
+            if (carater == '=') {
+                lexema.append(carater);
             } else {
                 leitor.rollBack();
             }
-        } else if (caracter == '<' && leitor.hasNext()) {
-            caracter = leitor.proximoCaracter();
-            switch (caracter) {
+        } else if (lexema.charAt(0) == '<' && leitor.hasNext()) {
+            Character carater = leitor.proximoCarater();
+            switch (carater) {
                 case '=':
-                    lexema += caracter;
+                    lexema.append(carater);
                     break;
                 case '>':
-                    lexema += caracter;
+                    lexema.append(carater);
                     break;
                 default:
                     leitor.rollBack();
                     break;
             }
         }
-        return TokenFactory.criarToken(lexema, leitor.getPosicao());
+        return TokenFactory.criar(lexema.toString(), leitor.posicao());
     }
 
     private Token lerCaracteresEspeciais() {
-        Character caracter = leitor.proximoCaracter();
-        String lexema = caracter.toString();
-        if (caracter == '.' && leitor.hasNext()) {
-            caracter = leitor.proximoCaracter();
+        String lexema = leitor.proximoCarater().toString();
+        if (lexema.charAt(0) == '.' && leitor.hasNext()) {
+            Character caracter = leitor.proximoCarater();
             if (caracter == '.') {
                 lexema += caracter;
             } else {
                 leitor.rollBack();
             }
         }
-        return TokenFactory.criarToken(lexema, leitor.getPosicao());
+        return TokenFactory.criar(lexema, leitor.posicao());
     }
 
     private Token lerLiteral() throws ErroLexico {
-        StringBuilder lexema = new StringBuilder();
-        Character caracter = null;
+        var lexema = new StringBuilder();
+        Character carater = null;
         while (leitor.hasNext()) {
-            caracter = leitor.proximoCaracter();
+            carater = leitor.proximoCarater();
             if (lexema.length() > 255) {
-                throw new ErroLexico(leitor.getPosicao(), "Quantidade de carácteres superior ao permitido '255'.");
+                throw new ErroLexico(leitor.posicao(), "Quantidade de caracteres superior ao permitido[255].");
             }
-            if (caracter == '\'') {
+            if (carater == '\'') {
                 break;
             }
-            lexema.append(caracter);
+            lexema.append(carater);
         }
-        if (caracter != '\'') {
-            throw new ErroLexico(leitor.getPosicao(), "Esperado carácter de fechamento '\''.");
+        if (carater != '\'') {
+            throw new ErroLexico(leitor.posicao(), "Esperado caráter de fechamento '\''.");
         }
-        return TokenFactory.criarLiteral(lexema.toString(), leitor.getPosicao());
+        return TokenFactory.criarLiteral(lexema.toString(), leitor.posicao());
     }
 
     private Token lerAtribuidor() {
-        String lexema = leitor.proximoCaracter().toString();
-        Character caracter = leitor.proximoCaracter();
-        if (caracter != '=') {
+        var lexema = new StringBuilder(leitor.proximoCarater().toString());
+        Character carater = leitor.proximoCarater();
+        if (carater != '=') {
             leitor.rollBack();
         } else {
-            lexema += caracter;
+            lexema.append(carater);
         }
-        return TokenFactory.criarToken(lexema, leitor.getPosicao());
+        return TokenFactory.criar(lexema.toString(), leitor.posicao());
     }
 
     private void lerCaracteresDeAberturaOuFechamento() throws ErroLexico {
-        String lexema = leitor.proximoCaracter().toString();
-        if (leitor.proximoCaracter() == '*') {
+        String lexema = leitor.proximoCarater().toString();
+        if (leitor.proximoCarater() == '*') {
             lerComentario();
             return;
         }
-        bufferTokens.push(TokenFactory.criarToken(lexema, leitor.getPosicao()));
+        bufferTokens.push(TokenFactory.criar(lexema, leitor.posicao()));
         leitor.rollBack();
     }
 
     private void lerComentario() throws ErroLexico {
         boolean isFimDoComentario = false;
         while (leitor.hasNext()) {
-            Character caracter = leitor.proximoCaracter();
-            if (caracter == '*') {
-                if (leitor.proximoCaracter() == ')') {
+            Character carater = leitor.proximoCarater();
+            if (carater == '*') {
+                if (leitor.proximoCarater() == ')') {
                     isFimDoComentario = true;
                     break;
                 }
@@ -184,7 +174,7 @@ public class Scanner {
             }
         }
         if (!isFimDoComentario) {
-            throw new ErroLexico(leitor.getPosicao(), "É necessário encerrar o comentário.");
+            throw new ErroLexico(leitor.posicao(), "É necessário encerrar o comentário.");
         }
     }
 }

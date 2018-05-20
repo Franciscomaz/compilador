@@ -10,12 +10,6 @@ public class Identificador extends Simbolo {
     private String tipo;
     private final String categoria;
 
-    public Identificador(int codigo, String nome, int nivel, String categoria) {
-        super(codigo, nome);
-        this.nivel = nivel;
-        this.categoria = categoria;
-    }
-
     public Identificador(Token token, int nivel, String categoria) {
         super(token.codigo(), token.palavra());
         this.nivel = nivel;
@@ -25,12 +19,6 @@ public class Identificador extends Simbolo {
     public int nivel() {
         return nivel;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) { this.tipo = tipo; }
 
     public String categoria() {
         return categoria;
