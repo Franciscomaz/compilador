@@ -155,7 +155,8 @@ public class Scanner {
     private Token lerOperadorAritmetico() throws ErroLexico {
         String lexema = leitor.proximoCarater().toString();
         if(lexema.equals("-")){
-            if(leitor.proximoCarater() == ' '){
+            Character carater = leitor.proximoCarater();
+            if(carater != null && carater == ' '){
                 return TokenFactory.criar(lexema, leitor.posicao());
             }
             leitor.rollBack();

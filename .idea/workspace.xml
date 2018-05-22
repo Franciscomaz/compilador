@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a16b5363-e315-41d0-83aa-b1f5cce6b5f9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/controllers/EditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/controllers/EditorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/mensagem/Mensagem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/mensagem/Mensagem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/mensagem/MensagemDeErro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/mensagem/MensagemDeErro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/mensagem/MensagemDeSucesso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/mensagem/MensagemDeSucesso.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/parser/MatrizDeParsing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/parser/MatrizDeParsing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/parser/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compilador/scanner/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/scanner/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/semantico/AnalisadorSemantico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/semantico/AnalisadorSemantico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/simbolo/TabelaDeSimbolos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/simbolo/TabelaDeSimbolos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compilador/view/Console.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compilador/view/Console.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -72,8 +62,8 @@
       <file leaf-file-name="Scanner.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/compilador/scanner/Scanner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="163" selection-start-line="163" selection-end-line="163" />
+            <state relative-caret-position="202">
+              <caret line="162" column="35" selection-start-line="162" selection-start-column="35" selection-end-line="162" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -385,7 +375,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526344769862</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adicionado automato para verificação de numeros negativos">
+      <created>1526947995109</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1526947995109</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -454,7 +451,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modificações na analise sintatica" />
     <MESSAGE value="Modificações na analise semantica" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificações na analise semantica" />
+    <MESSAGE value="Adicionado automato para verificação de numeros negativos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado automato para verificação de numeros negativos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -852,8 +850,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/compilador/scanner/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="163" selection-start-line="163" selection-end-line="163" />
+        <state relative-caret-position="202">
+          <caret line="162" column="35" selection-start-line="162" selection-start-column="35" selection-end-line="162" selection-end-column="35" />
         </state>
       </provider>
     </entry>
