@@ -19,6 +19,7 @@ import compilador.view.EditorDeTexto;
 import compilador.scanner.Tabela;
 import compilador.view.Console;
 import compilador.view.TabelaView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class EditorController implements ActionListener {
         }
     }
 
-    private void verificarComando(ActionEvent e) throws IOException{
+    private void verificarComando(ActionEvent e) throws IOException {
         switch (e.getActionCommand()) {
             case "Novo":
                 novo();
@@ -109,19 +110,20 @@ public class EditorController implements ActionListener {
 
     private void compilar() {
         try {
-            Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).geTokens();
+            Stack<Token> pilha = new Scanner(new Leitor(editor.getTexto())).analisar();
             editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
             editor.adicionarConsole(new Console(new MensagemDeSucesso()));
-            new Parser(inverterPilha((Stack)pilha.clone())).analisar();
-        } catch (ErroLexico|ErroSintatico|ErroSemantico e) {
+            new Parser(inverterPilha(pilha)).analisar();
+        } catch (ErroLexico | ErroSintatico | ErroSemantico e) {
             editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
         }
     }
-    
-    private Stack<Token> inverterPilha(Stack<Token> pilha){
-        final Stack<Token> pilhaInvertida = new Stack<>();
-        while(!pilha.empty()){
-            pilhaInvertida.push(pilha.pop());
+
+    private Stack<Token> inverterPilha(Stack<Token> pilha) {
+        var temp = (Stack<Token>) pilha.clone();
+        var pilhaInvertida = new Stack<Token>();
+        while (!temp.empty()) {
+            pilhaInvertida.push(temp.pop());
         }
         return pilhaInvertida;
     }

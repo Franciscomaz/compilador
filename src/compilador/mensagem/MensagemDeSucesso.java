@@ -14,12 +14,12 @@ import java.awt.Color;
 public class MensagemDeSucesso implements Mensagem{
 
     @Override
-    public String getMensagem() {
+    public String conteudo() {
         return "Compilado com sucesso.";
     }
 
     @Override
-    public Color getColor() {
+    public Color cor() {
         return new Color(0, 100, 0);
     }
 }

@@ -25,7 +25,7 @@ public class Parser {
             final Simbolo simbolo = derivacao.proximaProducao();
             if (simbolo.isTerminal()) {
                 if (simbolo.codigo() == token.codigo()) {
-                    analisadorSemantico.lerToken(token);
+                    //analisadorSemantico.lerToken(token);
                     tokens.pop();
                     derivacao.removerProducao();
                 } else {

@@ -19,12 +19,12 @@ public class MensagemDeErro implements Mensagem{
     }
     
     @Override
-    public String getMensagem() {
+    public String conteudo() {
         return mensagem;
     }
 
     @Override
-    public Color getColor() {
+    public Color cor() {
         return Color.RED;
     }
 }

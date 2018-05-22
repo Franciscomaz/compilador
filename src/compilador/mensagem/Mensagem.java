@@ -12,6 +12,6 @@ import java.awt.Color;
  * @author Chicom
  */
 public interface Mensagem {
-    public String getMensagem();
-    public Color getColor();
+    public String conteudo();
+    public Color cor();
 }

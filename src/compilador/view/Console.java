@@ -10,8 +10,8 @@ public class Console extends javax.swing.JPanel {
     }
 
     public void setMensagem(Mensagem mensagem) {
-        painelDeTexto.setForeground(mensagem.getColor());
-        painelDeTexto.setText(mensagem.getMensagem());
+        painelDeTexto.setForeground(mensagem.cor());
+        painelDeTexto.setText(mensagem.conteudo());
     }
 
     @SuppressWarnings("unchecked")

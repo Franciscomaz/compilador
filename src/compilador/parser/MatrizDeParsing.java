@@ -9,12 +9,11 @@ import compilador.simbolo.Simbolo;
 import compilador.token.Token;
 
 /**
- *
  * @author comp15
  */
 public class MatrizDeParsing {
 
-    private final String[][] matrizDeParsing = new String[190][100];
+    private final String[][] matrizDeParsing = new String[100][100];
 
     public MatrizDeParsing() {
         matrizDeParsing[52][1] = "Program|Identificador|;|BLOCO|.";
@@ -209,8 +208,8 @@ public class MatrizDeParsing {
         matrizDeParsing[86][39] = "NULL";
         matrizDeParsing[86][46] = ",|Inteiro|RPINTEIRO";
     }
-    
-    public String getDerivacao(Simbolo simbolo, Token token){
+
+    public String getDerivacao(Simbolo simbolo, Token token) {
         return matrizDeParsing[simbolo.codigo()][token.codigo()];
     }
 }

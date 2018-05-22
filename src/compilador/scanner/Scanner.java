@@ -15,7 +15,7 @@ public class Scanner {
         this.bufferTokens = new Stack<>();
     }
 
-    public Stack<Token> geTokens() throws ErroLexico {
+    public Stack<Token> analisar() throws ErroLexico {
         while (leitor.hasNext()) {
             final Character carater = leitor.proximoCarater();
             if (Character.isWhitespace(carater)) {
@@ -39,7 +39,8 @@ public class Scanner {
                 leitor.rollBack();
                 bufferTokens.add(lerAtribuidor());
             } else if (carater.toString().matches("[+*-]")) {
-                bufferTokens.add(TokenFactory.criar(carater.toString(), leitor.posicao()));
+                leitor.rollBack();
+                bufferTokens.add(lerOperadorAritmetico());
             } else if (carater.toString().matches("[()\\[\\]]")) {
                 leitor.rollBack();
                 lerCaracteresDeAberturaOuFechamento();
@@ -51,7 +52,7 @@ public class Scanner {
     }
 
     private Token lerIdentificador() throws ErroLexico {
-        StringBuilder lexema = new StringBuilder();
+        var lexema = new StringBuilder();
         while (leitor.hasNext()) {
             if (lexema.length() > 30) {
                 throw new ErroLexico(leitor.posicao(), "Quantidade de caracteres superior ao permitido[30].");
@@ -149,6 +150,18 @@ public class Scanner {
             lexema.append(carater);
         }
         return TokenFactory.criar(lexema.toString(), leitor.posicao());
+    }
+
+    private Token lerOperadorAritmetico() throws ErroLexico {
+        String lexema = leitor.proximoCarater().toString();
+        if(lexema.equals("-")){
+            if(leitor.proximoCarater() == ' '){
+                return TokenFactory.criar(lexema, leitor.posicao());
+            }
+            leitor.rollBack();
+            return TokenFactory.criarInteiro(lexema+lerDigito().palavra(), leitor.posicao());
+        }
+        return TokenFactory.criar(lexema, leitor.posicao());
     }
 
     private void lerCaracteresDeAberturaOuFechamento() throws ErroLexico {

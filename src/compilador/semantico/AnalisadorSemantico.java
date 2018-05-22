@@ -31,6 +31,7 @@ public class AnalisadorSemantico {
         } else if (token.isCategoria()) {
             categoria = token.palavra();
         } else if (token.palavra().equals("BEGIN")) {
+            categoria = "";
             acao = "atribuicao";
         } else if (token.palavra().equals("PROCEDURE")) {
             acao = "declaracao";

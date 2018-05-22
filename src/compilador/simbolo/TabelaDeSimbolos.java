@@ -4,13 +4,8 @@ import java.util.HashMap;
 
 public class TabelaDeSimbolos {
 
-    private final HashMap<String, Integer> terminais;
-    private final HashMap<String, Integer> naoTerminais;
-
-    public TabelaDeSimbolos() {
-        terminais = TabelaTerminais.instance();
-        naoTerminais = TabelaNaoTerminais.instance();
-    }
+    private static HashMap<String, Integer> terminais;
+    private static HashMap<String, Integer> naoTerminais;
 
     public Simbolo simbolo(String simbolo) {
         return new Simbolo(codigo(simbolo.toUpperCase()), simbolo.toUpperCase());
@@ -34,116 +29,99 @@ public class TabelaDeSimbolos {
         return terminais.containsKey(terminal.toUpperCase());
     }
 
-    private static class TabelaTerminais {
-
-        private static HashMap<String, Integer> instance;
-
-        static HashMap<String, Integer> instance() {
-            if (instance != null) {
-                return instance;
-            }
-            instance = new HashMap<>();
-            instance.put("PROGRAM", 1);
-            instance.put("LABEL", 2);
-            instance.put("CONST", 3);
-            instance.put("VAR", 4);
-            instance.put("PROCEDURE", 5);
-            instance.put("BEGIN", 6);
-            instance.put("END", 7);
-            instance.put("INTEGER", 8);
-            instance.put("ARRAY", 9);
-            instance.put("OF", 10);
-            instance.put("CALL", 11);
-            instance.put("GOTO", 12);
-            instance.put("IF", 13);
-            instance.put("THEN", 14);
-            instance.put("ELSE", 15);
-            instance.put("WHILE", 16);
-            instance.put("DO", 17);
-            instance.put("REPEAT", 18);
-            instance.put("UNTIL", 19);
-            instance.put("READLN", 20);
-            instance.put("WRITELN", 21);
-            instance.put("OR", 22);
-            instance.put("AND", 23);
-            instance.put("NOT", 24);
-            instance.put("IDENTIFICADOR", 25);
-            instance.put("INTEIRO", 26);
-            instance.put("FOR", 27);
-            instance.put("TO", 28);
-            instance.put("CASE", 29);
-            instance.put("+", 30);
-            instance.put("-", 31);
-            instance.put("*", 32);
-            instance.put("/", 33);
-            instance.put("[", 34);
-            instance.put("]", 35);
-            instance.put("(", 36);
-            instance.put(")", 37);
-            instance.put(":=", 38);
-            instance.put(":", 39);
-            instance.put("=", 40);
-            instance.put(">", 41);
-            instance.put(">=", 42);
-            instance.put("<", 43);
-            instance.put("<=", 44);
-            instance.put("<>", 45);
-            instance.put(",", 46);
-            instance.put(";", 47);
-            instance.put("LITERAL", 48);
-            instance.put(".", 49);
-            instance.put("..", 50);
-            instance.put("$", 51);
-            return instance;
+    public TabelaDeSimbolos() {
+        if(terminais == null) {
+            terminais = new HashMap<>();
+            terminais.put("PROGRAM", 1);
+            terminais.put("LABEL", 2);
+            terminais.put("CONST", 3);
+            terminais.put("VAR", 4);
+            terminais.put("PROCEDURE", 5);
+            terminais.put("BEGIN", 6);
+            terminais.put("END", 7);
+            terminais.put("INTEGER", 8);
+            terminais.put("ARRAY", 9);
+            terminais.put("OF", 10);
+            terminais.put("CALL", 11);
+            terminais.put("GOTO", 12);
+            terminais.put("IF", 13);
+            terminais.put("THEN", 14);
+            terminais.put("ELSE", 15);
+            terminais.put("WHILE", 16);
+            terminais.put("DO", 17);
+            terminais.put("REPEAT", 18);
+            terminais.put("UNTIL", 19);
+            terminais.put("READLN", 20);
+            terminais.put("WRITELN", 21);
+            terminais.put("OR", 22);
+            terminais.put("AND", 23);
+            terminais.put("NOT", 24);
+            terminais.put("IDENTIFICADOR", 25);
+            terminais.put("INTEIRO", 26);
+            terminais.put("FOR", 27);
+            terminais.put("TO", 28);
+            terminais.put("CASE", 29);
+            terminais.put("+", 30);
+            terminais.put("-", 31);
+            terminais.put("*", 32);
+            terminais.put("/", 33);
+            terminais.put("[", 34);
+            terminais.put("]", 35);
+            terminais.put("(", 36);
+            terminais.put(")", 37);
+            terminais.put(":=", 38);
+            terminais.put(":", 39);
+            terminais.put("=", 40);
+            terminais.put(">", 41);
+            terminais.put(">=", 42);
+            terminais.put("<", 43);
+            terminais.put("<=", 44);
+            terminais.put("<>", 45);
+            terminais.put(",", 46);
+            terminais.put(";", 47);
+            terminais.put("LITERAL", 48);
+            terminais.put(".", 49);
+            terminais.put("..", 50);
+            terminais.put("$", 51);
         }
-    }
-
-    private static class TabelaNaoTerminais {
-
-        private static HashMap<String, Integer> instance;
-
-        static HashMap<String, Integer> instance() {
-            if (instance != null) {
-                return instance;
-            }
-            instance = new HashMap<>();
-            instance.put("PROGRAMA", 52);
-            instance.put("BLOCO", 53);
-            instance.put("DCLROT", 54);
-            instance.put("LID", 55);
-            instance.put("REPIDENT", 56);
-            instance.put("DCLCONST", 57);
-            instance.put("LDCONST", 58);
-            instance.put("DCLVAR", 59);
-            instance.put("LDVAR", 60);
-            instance.put("TIPO", 61);
-            instance.put("DCLPROC", 62);
-            instance.put("DEFPAR", 63);
-            instance.put("CORPO", 64);
-            instance.put("REPCOMANDO", 65);
-            instance.put("COMANDO", 66);
-            instance.put("RCOMID", 67);
-            instance.put("RVAR", 68);
-            instance.put("PARAMETROS", 69);
-            instance.put("REPPAR", 70);
-            instance.put("ELSEPARTE", 71);
-            instance.put("VARIAVEL", 72);
-            instance.put("VARIAVEL1", 73);
-            instance.put("REPVARIAVEL", 74);
-            instance.put("ITEMSAIDA", 75);
-            instance.put("REPITEM", 76);
-            instance.put("EXPRESSAO", 77);
-            instance.put("REPEXPSIMP", 78);
-            instance.put("EXPSIMP", 79);
-            instance.put("REPEXP", 80);
-            instance.put("TERMO", 81);
-            instance.put("REPTERMO", 82);
-            instance.put("FATOR", 83);
-            instance.put("CONDCASE", 84);
-            instance.put("CONTCASE", 85);
-            instance.put("RPINTEIRO", 86);
-            instance.put("SEM EFE", 87);
-            return instance;
+        if(naoTerminais == null){
+            naoTerminais = new HashMap<>();
+            naoTerminais.put("PROGRAMA", 52);
+            naoTerminais.put("BLOCO", 53);
+            naoTerminais.put("DCLROT", 54);
+            naoTerminais.put("LID", 55);
+            naoTerminais.put("REPIDENT", 56);
+            naoTerminais.put("DCLCONST", 57);
+            naoTerminais.put("LDCONST", 58);
+            naoTerminais.put("DCLVAR", 59);
+            naoTerminais.put("LDVAR", 60);
+            naoTerminais.put("TIPO", 61);
+            naoTerminais.put("DCLPROC", 62);
+            naoTerminais.put("DEFPAR", 63);
+            naoTerminais.put("CORPO", 64);
+            naoTerminais.put("REPCOMANDO", 65);
+            naoTerminais.put("COMANDO", 66);
+            naoTerminais.put("RCOMID", 67);
+            naoTerminais.put("RVAR", 68);
+            naoTerminais.put("PARAMETROS", 69);
+            naoTerminais.put("REPPAR", 70);
+            naoTerminais.put("ELSEPARTE", 71);
+            naoTerminais.put("VARIAVEL", 72);
+            naoTerminais.put("VARIAVEL1", 73);
+            naoTerminais.put("REPVARIAVEL", 74);
+            naoTerminais.put("ITEMSAIDA", 75);
+            naoTerminais.put("REPITEM", 76);
+            naoTerminais.put("EXPRESSAO", 77);
+            naoTerminais.put("REPEXPSIMP", 78);
+            naoTerminais.put("EXPSIMP", 79);
+            naoTerminais.put("REPEXP", 80);
+            naoTerminais.put("TERMO", 81);
+            naoTerminais.put("REPTERMO", 82);
+            naoTerminais.put("FATOR", 83);
+            naoTerminais.put("CONDCASE", 84);
+            naoTerminais.put("CONTCASE", 85);
+            naoTerminais.put("RPINTEIRO", 86);
+            naoTerminais.put("SEM EFE", 87);
         }
     }
 }
