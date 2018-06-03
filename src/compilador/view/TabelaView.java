@@ -1,6 +1,6 @@
 package compilador.view;
 
-import compilador.scanner.Tabela;
+import compilador.lexico.Tabela;
 
 public class TabelaView extends javax.swing.JPanel {
     private javax.swing.JTable tabela;

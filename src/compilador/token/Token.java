@@ -1,6 +1,6 @@
 package compilador.token;
 
-import compilador.scanner.Leitor.Posicao;
+import compilador.lexico.Leitor.Posicao;
 import compilador.simbolo.Simbolo;
 
 public class Token {

@@ -1,4 +1,4 @@
-package compilador.scanner;
+package compilador.lexico;
 
 import compilador.token.Token;
 import java.util.ArrayList;

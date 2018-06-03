@@ -1,6 +1,6 @@
 package compilador.token;
 
-import compilador.scanner.Leitor;
+import compilador.lexico.Leitor;
 import compilador.simbolo.TabelaDeSimbolos;
 
 public class TokenFactory {

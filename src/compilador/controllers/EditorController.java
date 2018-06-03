@@ -7,16 +7,17 @@ package compilador.controllers;
 
 import compilador.mensagem.MensagemDeErro;
 import compilador.mensagem.MensagemDeSucesso;
-import compilador.parser.ErroSintatico;
-import compilador.parser.Parser;
-import compilador.scanner.ErroLexico;
-import compilador.scanner.Leitor;
-import compilador.scanner.Scanner;
+import compilador.semantico.AnalisadorSemantico;
+import compilador.sintatico.ErroSintatico;
+import compilador.sintatico.Parser;
+import compilador.lexico.ErroLexico;
+import compilador.lexico.Leitor;
+import compilador.lexico.Scanner;
 import compilador.semantico.ErroSemantico;
 import compilador.token.Token;
 import compilador.utils.ArquivoUtils;
 import compilador.view.EditorDeTexto;
-import compilador.scanner.Tabela;
+import compilador.lexico.Tabela;
 import compilador.view.Console;
 import compilador.view.TabelaView;
 
@@ -114,6 +115,7 @@ public class EditorController implements ActionListener {
             editor.adicionarTabela(new TabelaView(new Tabela(pilha)));
             editor.adicionarConsole(new Console(new MensagemDeSucesso()));
             new Parser(inverterPilha(pilha)).analisar();
+            new AnalisadorSemantico(inverterPilha(pilha)).lerTokens();
         } catch (ErroLexico | ErroSintatico | ErroSemantico e) {
             editor.adicionarConsole(new Console(new MensagemDeErro(e.getMessage())));
         }

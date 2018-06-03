@@ -4,7 +4,7 @@ public class Simbolo {
     private final int codigo;
     private final String nome;
 
-    Simbolo(int codigo, String nome) {
+    protected Simbolo(int codigo, String nome) {
         this.codigo = codigo;
         this.nome = nome;
     }

@@ -1,33 +1,46 @@
 package compilador.semantico;
 
-import compilador.simbolo.Identificador;
+import compilador.Identificador.Identificador;
+import compilador.Identificador.Variavel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
-class ListaDeIdentificadores {
-    private List<Identificador> identificadores;
-
-    ListaDeIdentificadores() {
-        this.identificadores = new ArrayList<>();
+public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T> {
+    public ListaDeIdentificadores() {
     }
 
-    void adicionar(Identificador identificador) {
-        identificadores.add(identificador);
+    public void adicionarTipo(String tipo) {
+        for (var identificador : this) {
+            if (identificador instanceof Variavel) {
+                ((Variavel) identificador).setTipo(tipo);
+            }
+        }
     }
 
-    void deletarIdentificadoreDoNivel(int nivel) {
-        var identificadoresQueSeramRemovidos = identificadores
+    public void deletarIdentificadoreDoNivel(int nivel) {
+        var identificadoresQueSeramRemovidos = this
                 .stream()
                 .filter(identificador -> identificador.nivel() == nivel
                         && !identificador.categoria().equals("PROCEDURE"))
                 .collect(Collectors.toList());
-        identificadores.removeAll(identificadoresQueSeramRemovidos);
+        this.removeAll(identificadoresQueSeramRemovidos);
+    }
+
+    public Identificador buscar(Identificador identificador) throws ErroSemantico {
+        identificador = this
+                .stream()
+                .filter(identificador::equals)
+                .findFirst()
+                .orElse(null);
+        if (identificador == null) {
+            throw new ErroSemantico(identificador.categoria() + " não declarado");
+        }
+        return identificador;
     }
 
     boolean contem(Identificador identificador) {
-        return identificadores
+        return this
                 .stream()
                 .anyMatch(identificador::equals);
     }
