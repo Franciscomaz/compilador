@@ -7,6 +7,7 @@ import java.util.Stack;
 
 public class AnalisadorSemantico {
     private int nivel;
+    private String categoria;
     private final Stack<Token> tokens;
     private ListaDeIdentificadores<Variavel> variaveisSemTipo;
     private ListaDeIdentificadores<Identificador> identificadores;
@@ -29,7 +30,13 @@ public class AnalisadorSemantico {
     }
 
     private void lerDeclaracao(Token token) throws ErroSemantico {
-        switch (token.palavra()) {
+        if(isCategoria(token)){
+            categoria = token.palavra();
+        }
+        if(token.palavra().equals("BEGIN")){
+            categoria = "";
+        }
+        switch (categoria) {
             case "PROGRAM":
                 lerProgram();
                 break;
@@ -64,6 +71,7 @@ public class AnalisadorSemantico {
 
     private void lerProgram() {
         identificadores.add(new Procedure(tokens.pop(), nivel));
+        categoria = "";
     }
 
     private void lerVar() throws ErroSemantico {
@@ -79,45 +87,54 @@ public class AnalisadorSemantico {
                 variaveisSemTipo.adicionarTipo(token.palavra());
                 identificadores.addAll(variaveisSemTipo);
                 variaveisSemTipo.clear();
-            } else if (!isTokenDeSeparacao(token)) {
+            } else if(isCategoria(token) || token.palavra().equals("BEGIN")){
+                lerDeclaracao(token);
                 break;
             }
             token = tokens.pop();
         }
     }
 
-    private void lerConstante() {
+    private void lerConstante() throws ErroSemantico {
         Token token = tokens.pop();
         while (!tokens.empty()) {
             if (token.isIdentificador()) {
                 identificadores.add(new Constante(token, nivel));
-            } else if (!isTokenDeSeparacao(token)) {
+            } else if(isCategoria(token) || token.palavra().equals("BEGIN")){
+                lerDeclaracao(token);
                 break;
             }
             token = tokens.pop();
         }
     }
 
-    private void lerProcedure() {
+    private void lerProcedure() throws ErroSemantico {
         Token token = tokens.pop();
         Procedure procedure = new Procedure(token, nivel);
+        if(identificadores.contem(procedure)){
+            throw new ErroSemantico("procedure já declarada", token);
+        }
         while (!token.palavra().equals(";")) {
+            token = tokens.pop();
             if (token.isIdentificador()) {
-                procedure.adicionarParametro(new Parametro(token, nivel));
+                var parametro = new Parametro(token, nivel);
+                identificadores.add(parametro);
+                procedure.adicionarParametro(parametro);
             } else if (token.isTipo()) {
                 procedure.adicionarTipo(token.palavra());
             }
-            token = tokens.pop();
         }
+        categoria = "";
         identificadores.add(procedure);
     }
 
-    private void lerRotulo() {
+    private void lerRotulo() throws ErroSemantico {
         Token token = tokens.pop();
         while (!tokens.empty()) {
             if (token.isIdentificador()) {
                 identificadores.add(new Label(token, nivel));
-            } else if (!isTokenDeSeparacao(token)) {
+            } else if(isCategoria(token) || token.palavra().equals("BEGIN")){
+                lerDeclaracao(token);
                 break;
             }
             token = tokens.pop();
@@ -141,7 +158,7 @@ public class AnalisadorSemantico {
 
     private void verificarNivel(Token token) {
         final String palavra = token.palavra();
-        if (palavra.equals("PROGRAM") || palavra.equals("PROCEDURE") || palavra.equals("IF") || palavra.equals("WHILE") || palavra.equals("FOR")) {
+        if (palavra.equals("PROGRAM") || palavra.equals("PROCEDURE") || palavra.equals("IF") || palavra.equals("WHILE") || palavra.equals("FOR") || palavra.equals("REPEAT")) {
             nivel++;
         } else if (palavra.equals("END")) {
             identificadores.deletarIdentificadoreDoNivel(nivel);
@@ -149,7 +166,11 @@ public class AnalisadorSemantico {
         }
     }
 
-    private boolean isTokenDeSeparacao(Token token) {
-        return token.palavra().equals(";") || token.palavra().equals(",") || token.palavra().equals(":");
+    private boolean isCategoria(Token token){
+        return token.palavra().equals("VAR") ||
+                token.palavra().equals("LABEL") ||
+                token.palavra().equals("CONST") ||
+                token.palavra().equals("PROCEDURE") ||
+                token.palavra().equals("PROGRAM");
     }
 }

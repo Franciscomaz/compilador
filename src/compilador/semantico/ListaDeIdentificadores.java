@@ -13,7 +13,9 @@ public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T
     public void adicionarTipo(String tipo) {
         for (var identificador : this) {
             if (identificador instanceof Variavel) {
-                ((Variavel) identificador).setTipo(tipo);
+                if(((Variavel) identificador).getTipo() == null) {
+                    ((Variavel) identificador).setTipo(tipo);
+                }
             }
         }
     }
@@ -28,15 +30,17 @@ public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T
     }
 
     public Identificador buscar(Identificador identificador) throws ErroSemantico {
-        identificador = this
+        Integer asd = new Integer(12);
+
+        var temp = this
                 .stream()
                 .filter(identificador::equals)
                 .findFirst()
                 .orElse(null);
-        if (identificador == null) {
+        if (temp == null) {
             throw new ErroSemantico(identificador.categoria() + " não declarado");
         }
-        return identificador;
+        return temp;
     }
 
     boolean contem(Identificador identificador) {
