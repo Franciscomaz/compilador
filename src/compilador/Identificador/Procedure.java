@@ -1,5 +1,6 @@
 package compilador.Identificador;
 
+import compilador.Identificador.tipo.Tipo;
 import compilador.semantico.ErroSemantico;
 import compilador.semantico.ListaDeIdentificadores;
 import compilador.token.Token;
@@ -16,14 +17,13 @@ public class Procedure extends Identificador {
         parametros.add(parametro);
     }
 
-    public void adicionarTipo(String tipo) {
+    public void adicionarTipo(Tipo tipo) {
         parametros.adicionarTipo(tipo);
     }
 
-    public boolean contemParametro(Parametro parametro, int posicao) throws ErroSemantico {
+    public Parametro getParametro(int posicao) throws ErroSemantico {
         try{
-            Parametro param = parametros.get(posicao);
-            return (param.getTipo().equals(parametro.getTipo()));
+            return parametros.get(posicao);
         } catch (IndexOutOfBoundsException exception){
             throw new ErroSemantico("quantidade incorreta de parametros");
         }

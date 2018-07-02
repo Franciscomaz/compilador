@@ -2,6 +2,7 @@ package compilador.semantico;
 
 import compilador.Identificador.Identificador;
 import compilador.Identificador.Variavel;
+import compilador.Identificador.tipo.Tipo;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -10,12 +11,10 @@ public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T
     public ListaDeIdentificadores() {
     }
 
-    public void adicionarTipo(String tipo) {
+    public void adicionarTipo(Tipo tipo) {
         for (var identificador : this) {
             if (identificador instanceof Variavel) {
-                if(((Variavel) identificador).getTipo() == null) {
-                    ((Variavel) identificador).setTipo(tipo);
-                }
+                ((Variavel) identificador).setTipo(tipo);
             }
         }
     }
@@ -30,15 +29,13 @@ public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T
     }
 
     public Identificador buscar(Identificador identificador) throws ErroSemantico {
-        Integer asd = new Integer(12);
-
         var temp = this
                 .stream()
-                .filter(identificador::equals)
+                .filter(ident -> identificador.nome().equals(ident.nome()))
                 .findFirst()
                 .orElse(null);
         if (temp == null) {
-            throw new ErroSemantico(identificador.categoria() + " não declarado");
+            throw new ErroSemantico(temp.nome() + " não declarado");
         }
         return temp;
     }
@@ -46,6 +43,6 @@ public class ListaDeIdentificadores<T extends Identificador> extends ArrayList<T
     boolean contem(Identificador identificador) {
         return this
                 .stream()
-                .anyMatch(identificador::equals);
+                .anyMatch(ident -> identificador.nome().equals(ident.nome()));
     }
 }

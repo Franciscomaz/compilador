@@ -23,9 +23,11 @@ public abstract class Identificador extends Simbolo {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Identificador that = (Identificador) o;
         return this.nivel >= that.nivel &&
-                Objects.equals(this.nome(), that.nome());
+                Objects.equals(this.nome(), that.nome()) &&
+                Objects.equals(this .categoria(), that.categoria());
     }
 
     @Override
