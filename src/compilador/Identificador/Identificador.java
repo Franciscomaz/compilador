@@ -27,7 +27,7 @@ public abstract class Identificador extends Simbolo {
         Identificador that = (Identificador) o;
         return this.nivel >= that.nivel &&
                 Objects.equals(this.nome(), that.nome()) &&
-                Objects.equals(this.categoria(), that.categoria());
+                Objects.equals(this .categoria(), that.categoria());
     }
 
     @Override
