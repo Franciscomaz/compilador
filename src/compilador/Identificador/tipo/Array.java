@@ -2,6 +2,8 @@ package compilador.Identificador.tipo;
 
 import compilador.semantico.ErroSemantico;
 
+import java.util.Objects;
+
 public class Array implements Tipo{
     private Tipo tipo = null;
     private int indexInicial = 0;
@@ -25,5 +27,20 @@ public class Array implements Tipo{
 
     public void setTipo(Tipo tipo){
         this.tipo = tipo;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inteiro inteiro = (Inteiro) o;
+        return Objects.equals(nome(), inteiro.nome());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(nome());
     }
 }

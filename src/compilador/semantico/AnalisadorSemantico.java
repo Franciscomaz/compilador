@@ -2,7 +2,6 @@ package compilador.semantico;
 
 import compilador.Identificador.*;
 import compilador.Identificador.tipo.Array;
-import compilador.Identificador.tipo.Inteiro;
 import compilador.Identificador.tipo.Tipo;
 import compilador.Identificador.tipo.TipoFactory;
 import compilador.token.Token;
@@ -16,6 +15,7 @@ public class AnalisadorSemantico {
     private String categoria;
     private final Stack<Token> tokens;
     private TabelaDeIdentificadores<Identificador> identificadores;
+    private Stack<String> pilhaDeBegins = new Stack<>();
 
     public AnalisadorSemantico(Stack<Token> tokens) {
         this.nivel = -1;
@@ -26,6 +26,10 @@ public class AnalisadorSemantico {
     public void lerTokens() throws ErroSemantico {
         while (!tokens.empty()) {
             Token token = tokens.pop();
+            if(token.palavra().equals("BEGIN")){
+                pilhaDeBegins.push("begin");
+                setCategoriaToNull();
+            }
             verificarNivel(token);
             if (token.isCategoria()) {
                 categoria = token.palavra();
@@ -73,7 +77,7 @@ public class AnalisadorSemantico {
     }
 
     private void lerProgram() throws ErroSemantico {
-        identificadores.adicionar(new Procedure(tokens.pop(), nivel));
+        identificadores.adicionar(nivel, new Procedure(tokens.pop(), nivel));
     }
 
     private void lerVar() throws ErroSemantico {
@@ -109,7 +113,7 @@ public class AnalisadorSemantico {
         Token token = tokens.pop();
         while (!tokens.empty()) {
             if (token.isIdentificador()) {
-                identificadores.adicionar(new Constante(token, nivel));
+                identificadores.adicionar(nivel, new Constante(token, nivel));
             } else if (pararLeitura(token)) {
                 break;
             }
@@ -131,14 +135,14 @@ public class AnalisadorSemantico {
                 tiparIdentificadores(parametros, TipoFactory.criar(token.palavra()));
             }
         }
-        identificadores.adicionar(procedure);
+        identificadores.adicionar(nivel, procedure);
     }
 
     private void lerRotulo() throws ErroSemantico {
         Token token = tokens.pop();
         while (!tokens.empty()) {
             if (token.isIdentificador()) {
-                identificadores.adicionar(new Label(token, nivel));
+                identificadores.adicionar(nivel, new Label(token, nivel));
             } else if (pararLeitura(token)) {
                 break;
             }
@@ -149,43 +153,52 @@ public class AnalisadorSemantico {
     private void lerChamada() throws ErroSemantico {
         int posicao = 0;
         Token token = tokens.pop();
-        var procedure = (Procedure) identificadores.buscar(token.palavra());
+        var procedure = (Procedure) identificadores.buscar(nivel, token.palavra());
         if (procedure == null) {
             throw new ErroSemantico("procedure não declarada ", token);
         }
-        while (!token.palavra().equals(";")) {
+        while (!token.palavra().equals(";") && !tokens.empty()) {
             token = tokens.pop();
+            var parametro = procedure.getParametro(posicao);
             if (token.isIdentificador()) {
-                var parametro = procedure.getParametro(posicao);
                 try{
-                    var temp = (Variavel)identificadores.buscar(token.palavra());
+                    var temp = (Variavel)identificadores.buscar(nivel, token.palavra());
+                    if(temp == null){
+                        throw new ErroSemantico("identificador não declarado", token);
+                    }
                     if (!parametro.getTipo().equals(temp.getTipo())) {
-                        throw new ErroSemantico("parametro não possui o mesmo tipo (" + parametro.getTipo() + ")");
+                        throw new ErroSemantico("parametro não possui o mesmo tipo (" + parametro.getTipo().nome() + ")");
                     }
                 } catch (ClassCastException exception){
                     throw new ErroSemantico("parametro não possui a mesma categoria", token);
                 }
+            } else if(token.isTipo()){
+                if(!token.palavra().toLowerCase().equals(parametro.nome())){
+                    throw new ErroSemantico("parametro não possui o mesmo tipo (" + parametro.getTipo().nome() + ")");
+                }
+            } else if(token.palavra().equals(",")){
+                posicao++;
             }
         }
     }
 
-
     private void verificarNivel(Token token) {
         final String palavra = token.palavra();
-        if (palavra.equals("PROGRAM") || palavra.equals("PROCEDURE") || palavra.equals("IF") || palavra.equals("WHILE") || palavra.equals("FOR")) {
+        if (palavra.equals("PROGRAM") || palavra.equals("PROCEDURE") || palavra.equals("IF") || palavra.equals("ELSE") || palavra.equals("WHILE") || palavra.equals("CASE")) {
             nivel++;
-            System.out.println("++"+nivel);
         } else if (palavra.equals("END")) {
-            identificadores.removerPeloNivel(nivel);
-            nivel--;
-            System.out.println("-- " + nivel);
+            pilhaDeBegins.pop();
+            if(pilhaDeBegins.empty()){
+                identificadores.removerPeloNivel(nivel);
+                nivel--;
+            }
         }
     }
 
     public void tiparIdentificadores(List<? extends Variavel> identificadoresSemTipo, Tipo tipo) throws ErroSemantico {
         identificadoresSemTipo.forEach(identificador -> identificador.setTipo(tipo));
         for (Identificador identificador : identificadoresSemTipo) {
-            identificadores.adicionar(identificador);
+            identificadores.adicionar(nivel, identificador);
         }
         identificadoresSemTipo.clear();
     }
@@ -196,9 +209,14 @@ public class AnalisadorSemantico {
             tokens.push(token);
             return true;
         } else if (token.palavra().equals("BEGIN")) {
-            categoria = null;
+            pilhaDeBegins.push("begin");
+            setCategoriaToNull();
             return true;
         }
         return false;
+    }
+
+    private void setCategoriaToNull(){
+        categoria = null;
     }
 }
