@@ -12,6 +12,18 @@ public class Array implements Tipo{
         return "array";
     }
 
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public int getIndexInicial() {
+        return indexInicial;
+    }
+
+    public int getIndexFinal() {
+        return indexFinal;
+    }
+
     public void setInicio(int index){
         indexInicial = index;
     }

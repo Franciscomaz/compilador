@@ -1,8 +1,9 @@
 package compilador.semantico;
 
 import compilador.Identificador.*;
+import compilador.Identificador.procedure.Parametro;
+import compilador.Identificador.procedure.Procedure;
 import compilador.Identificador.tipo.Array;
-import compilador.Identificador.tipo.Inteiro;
 import compilador.Identificador.tipo.Tipo;
 import compilador.Identificador.tipo.TipoFactory;
 import compilador.token.Token;
@@ -12,15 +13,11 @@ import java.util.List;
 import java.util.Stack;
 
 public class AnalisadorSemantico {
-    private int nivel;
     private String categoria;
     private final Stack<Token> tokens;
-    private TabelaDeIdentificadores<Identificador> identificadores;
 
     public AnalisadorSemantico(Stack<Token> tokens) {
-        this.nivel = -1;
         this.tokens = tokens;
-        this.identificadores = new TabelaDeIdentificadores<>();
     }
 
     public void lerTokens() throws ErroSemantico {
@@ -188,17 +185,5 @@ public class AnalisadorSemantico {
             identificadores.adicionar(identificador);
         }
         identificadoresSemTipo.clear();
-    }
-
-    private boolean pararLeitura(Token token) {
-        if (token.isCategoria()) {
-            categoria = token.palavra();
-            tokens.push(token);
-            return true;
-        } else if (token.palavra().equals("BEGIN")) {
-            categoria = null;
-            return true;
-        }
-        return false;
     }
 }

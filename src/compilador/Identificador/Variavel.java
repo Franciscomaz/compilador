@@ -6,8 +6,8 @@ import compilador.token.Token;
 public class Variavel extends Identificador{
     private Tipo tipo;
 
-    public Variavel(Token token, int nivel) {
-        super(token, nivel);
+    public Variavel(Token token) {
+        super(token);
     }
 
     public Tipo getTipo() {
@@ -17,10 +17,5 @@ public class Variavel extends Identificador{
     public Variavel setTipo(Tipo tipo) {
         this.tipo = tipo;
         return this;
-    }
-
-    @Override
-    public String categoria() {
-        return "variavel";
     }
 }
