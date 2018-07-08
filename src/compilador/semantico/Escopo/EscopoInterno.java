@@ -5,14 +5,13 @@ import compilador.Identificador.procedure.Parametro;
 import compilador.Identificador.procedure.Parametros;
 import compilador.semantico.ErroSemantico;
 import compilador.semantico.Variaveis;
+import compilador.token.Token;
 
-public class EscopoInterno implements Escopo {
+public class EscopoInterno extends Escopo {
     private Escopo escopoPai;
-    private Variaveis variaveis;
     private Parametros parametros;
 
     public EscopoInterno(Escopo escopoPai) {
-        this.variaveis = new Variaveis();
         this.escopoPai = escopoPai;
     }
 
@@ -21,14 +20,10 @@ public class EscopoInterno implements Escopo {
         parametros.adicionar(parametro);
     }
 
-    public void adicionarIdentificador(Identificador identificador) throws ErroSemantico {
-        variaveis.adicionar(identificador);
-    }
-
-    public Identificador buscar(Identificador identificador) throws ErroSemantico {
-        if(variaveis.contem(identificador)){
-            return variaveis.buscar(identificador);
+    public Identificador buscar(Token token) throws ErroSemantico {
+        if(variaveis.contem(token.palavra())){
+            return variaveis.buscar(token);
         }
-        return escopoPai.buscar(identificador);
+        return escopoPai.buscar(token);
     }
 }

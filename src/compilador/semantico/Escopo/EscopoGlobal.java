@@ -1,35 +1,21 @@
 package compilador.semantico.Escopo;
 
 import compilador.Identificador.Identificador;
-import compilador.Identificador.procedure.Procedure;
+import compilador.Identificador.Program;
 import compilador.semantico.ErroSemantico;
-import compilador.semantico.Variaveis;
+import compilador.token.Token;
 
-import java.util.HashMap;
+public class EscopoGlobal extends Escopo {
+    private final Program program;
 
-public class EscopoGlobal implements Escopo {
-    private final Identificador program;
-    private Variaveis variaveis;
-    private HashMap<Procedure, EscopoInterno> procedures;
-
-    public EscopoGlobal(Identificador program) {
+    public EscopoGlobal(Program program) {
         this.program = program;
-        this.variaveis = new Variaveis();
-        this.procedures = new HashMap<>();
     }
 
-    public void adicionarProcedure(Procedure procedure){
-        procedures.put(procedure, new EscopoInterno(this));
-    }
-
-    public void adicionarIdentificador(Identificador identificador) throws ErroSemantico {
-        variaveis.adicionar(identificador);
-    }
-
-    public Identificador buscar(Identificador identificador) throws ErroSemantico {
-        if(!variaveis.contem(identificador)){
+    public Identificador buscar(Token token) throws ErroSemantico {
+        if(!variaveis.contem(token.palavra())){
             throw new ErroSemantico("identificador não declarado");
         }
-        return variaveis.buscar(identificador);
+        return variaveis.buscar(token);
     }
 }

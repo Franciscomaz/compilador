@@ -1,33 +1,29 @@
 package compilador.semantico;
 
 import compilador.Identificador.Identificador;
+import compilador.token.Token;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 public class Variaveis {
-    private Set<Identificador> identificadores;
+    private HashMap<String, Identificador> identificadores;
 
     public Variaveis() {
-        identificadores = new HashSet<>();
+        identificadores = new HashMap<>();
     }
 
     public void adicionar(Identificador identificador) throws ErroSemantico {
-        if(contem(identificador)){
+        if(contem(identificador.nome())){
             throw new ErroSemantico("identificador já declarado" + identificador.nome());
         }
-        identificadores.add(identificador);
+        identificadores.put(identificador.nome(), identificador);
     }
 
-    public Identificador buscar(Identificador identificador){
-        return identificadores
-                .stream()
-                .filter(identificador::equals)
-                .findFirst()
-                .get();
+    public Identificador buscar(Token token){
+        return identificadores.get(token.palavra());
     }
 
-    public boolean contem(Identificador identificador){
-        return identificadores.contains(identificador);
+    public boolean contem(String nome){
+        return identificadores.containsKey(nome);
     }
 }

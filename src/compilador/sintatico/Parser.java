@@ -11,15 +11,13 @@ public class Parser {
 
     private final Derivacao derivacao;
     private final Stack<Token> tokens;
-    private final AnalisadorSemantico analisadorSemantico;
 
     public Parser(Stack<Token> tokens) {
         this.tokens = tokens;
         this.derivacao = new Derivacao("PROGRAMA");
-        this.analisadorSemantico = new AnalisadorSemantico(tokens);
     }
 
-    public void analisar() throws ErroSintatico, ErroSemantico {
+    public void analisar() throws ErroSintatico {
         while (!tokens.empty()) {
             final Token token = tokens.peek();
             final Simbolo simbolo = derivacao.proximaProducao();
