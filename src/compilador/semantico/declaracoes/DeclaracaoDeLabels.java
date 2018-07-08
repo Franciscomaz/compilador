@@ -14,6 +14,8 @@ public class DeclaracaoDeLabels extends DeclaracaoDeIdentificadores {
 
     @Override
     protected void ler(Token token, Escopo escopo) throws ErroSemantico {
-        escopo.adicionarIdentificador(new Label(token));
+        if(token.isIdentificador()){
+            escopo.adicionarIdentificador(new Label(token));
+        }
     }
 }

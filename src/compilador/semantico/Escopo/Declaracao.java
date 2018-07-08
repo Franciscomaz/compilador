@@ -16,6 +16,10 @@ public class Declaracao {
     }
 
     public void analisar() throws ErroSemantico {
-        DeclaracaoDeIdentificadoresFactory.getReader(tokens, tokens.pop()).execute(escopo);
+        Token token = tokens.pop();
+        if(token.codigo() == 6){
+            return;
+        }
+        DeclaracaoDeIdentificadoresFactory.getReader(tokens, token).execute(escopo);
     }
 }

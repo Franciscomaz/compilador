@@ -3,9 +3,15 @@ package compilador.Identificador.tipo;
 import compilador.semantico.ErroSemantico;
 
 public class Array implements Tipo{
-    private Tipo tipo = null;
-    private int indexInicial = 0;
-    private int indexFinal = 0;
+    private Tipo tipo;
+    private int indexInicial;
+    private int indexFinal;
+
+    public Array(Tipo tipo, int indexInicial, int indexFinal) throws ErroSemantico {
+        this.tipo = tipo;
+        this.indexInicial = indexInicial;
+        setFinal(indexFinal);
+    }
 
     @Override
     public String nome() {
@@ -24,10 +30,6 @@ public class Array implements Tipo{
         return indexFinal;
     }
 
-    public void setInicio(int index){
-        indexInicial = index;
-    }
-
     public void setFinal(int index) throws ErroSemantico {
         if(index < indexInicial){
             throw new ErroSemantico("array inválido");
@@ -35,7 +37,12 @@ public class Array implements Tipo{
         indexFinal = index;
     }
 
-    public void setTipo(Tipo tipo){
-        this.tipo = tipo;
+    @Override
+    public String toString() {
+        return "Array{" +
+                "tipo=" + tipo +
+                ", indexInicial=" + indexInicial +
+                ", indexFinal=" + indexFinal +
+                '}';
     }
 }

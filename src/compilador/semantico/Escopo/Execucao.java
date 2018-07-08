@@ -1,5 +1,8 @@
 package compilador.semantico.Escopo;
 
+import compilador.Identificador.Constante;
+import compilador.Identificador.Identificador;
+import compilador.Identificador.Variavel;
 import compilador.Identificador.procedure.Parametro;
 import compilador.Identificador.procedure.Parametros;
 import compilador.Identificador.procedure.Procedure;
@@ -44,7 +47,13 @@ public class Execucao {
         while(token.codigo() != 47){
             token = tokens.pop();
             if(token.isIdentificador()){
-                parametros.buscar(posicao++);
+                Parametro parametro = parametros.buscar(posicao++);
+                Identificador identificador = escopo.buscar(token);
+                if(!(identificador instanceof Variavel || identificador instanceof Constante)){
+                    throw new ErroSemantico("categoria invalida " + identificador.getClass());
+                }
+            } else if (token.codigo() == 26){
+                System.out.println(token.palavra());
             }
         }
     }

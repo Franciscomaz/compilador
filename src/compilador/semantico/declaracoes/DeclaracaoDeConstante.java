@@ -14,6 +14,8 @@ public class DeclaracaoDeConstante extends DeclaracaoDeIdentificadores {
 
     @Override
     protected void ler(Token token, Escopo escopo) throws ErroSemantico {
-        escopo.adicionarIdentificador(new Constante(token));
+        if(token.isIdentificador()){
+            escopo.adicionarIdentificador(new Constante(token));
+        }
     }
 }

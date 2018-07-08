@@ -18,7 +18,7 @@ public abstract class DeclaracaoDeIdentificadores {
             if (token.isCategoria()) {
                 DeclaracaoDeIdentificadoresFactory.getReader(tokens, token).execute(escopo);
                 return;
-            } else if (token.isIdentificador()){
+            } else {
                 ler(token, escopo);
             }
             token = tokens.pop();
