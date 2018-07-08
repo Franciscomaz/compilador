@@ -16,6 +16,6 @@ public class AnalisadorDeEscopo {
 
     public void analisar() throws ErroSemantico {
         new Declaracao(escopo, tokens).analisar();
-        new Execucao().analisar();
+        new Execucao(escopo, tokens).analisar();
     }
 }
