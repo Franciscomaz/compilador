@@ -1,14 +1,21 @@
 package compilador.Identificador;
 
+import compilador.lexico.Leitor;
 import compilador.simbolo.Simbolo;
 import compilador.token.Token;
 
 import java.util.Objects;
 
 public abstract class Identificador extends Simbolo {
+    private Leitor.Posicao posicao;
 
     public Identificador(Token token) {
         super(token.codigo(), token.palavra());
+        posicao = token.posicao();
+    }
+
+    public Leitor.Posicao getPosicao() {
+        return posicao;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class EscopoGlobal extends Escopo {
 
     public Identificador buscar(Token token) throws ErroSemantico {
         if(!variaveis.contem(token.palavra())){
-            throw new ErroSemantico("identificador não declarado");
+            throw new ErroSemantico("identificador não declarado", token);
         }
         return variaveis.buscar(token);
     }

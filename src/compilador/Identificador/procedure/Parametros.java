@@ -18,7 +18,7 @@ public class Parametros {
 
     public Parametro buscar(int posicao) throws ErroSemantico {
         if (isOutOfBounds(posicao)) {
-            throw new ErroSemantico("nemero de paramêtros " + posicao + ", maior que o esperado " + parametros.size());
+            throw new ErroSemantico("numero de paramêtros " + posicao + ", maior que o esperado " + parametros.size());
         }
         return parametros.get(posicao);
     }

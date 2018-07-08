@@ -17,12 +17,13 @@ public class DeclaracaoDeProcedures extends DeclaracaoDeIdentificadores {
     @Override
     protected void ler(Token token, Escopo escopo) throws ErroSemantico {
         Procedure procedure = new Procedure(token);
+        escopo.adicionarProcedure(procedure);
         while (token.codigo() != 47) {
-            if (token.isIdentificador()) {
-                procedure.adicionarParametro(new Parametro(token));
-            }
             token = tokens.pop();
+            if (token.isIdentificador()) {
+                escopo.getProcedure(procedure).adicionarParametro(new Parametro(token));
+            }
         }
-        new AnalisadorDeEscopo(escopo, tokens).analisar();
+        new AnalisadorDeEscopo(escopo.getProcedure(procedure), tokens).analisar();
     }
 }

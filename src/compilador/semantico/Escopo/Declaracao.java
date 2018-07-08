@@ -16,6 +16,6 @@ public class Declaracao {
     }
 
     public void analisar() throws ErroSemantico {
-        DeclaracaoDeIdentificadoresFactory.getReader(tokens).execute(escopo);
+        DeclaracaoDeIdentificadoresFactory.getReader(tokens, tokens.pop()).execute(escopo);
     }
 }

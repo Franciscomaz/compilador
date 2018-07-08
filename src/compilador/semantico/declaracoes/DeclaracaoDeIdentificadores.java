@@ -14,9 +14,10 @@ public abstract class DeclaracaoDeIdentificadores {
 
     public void execute(Escopo escopo) throws ErroSemantico {
         Token token = tokens.pop();
-        while (deveParar(token)) {
+        while (!deveParar(token)) {
             if (token.isCategoria()) {
-                DeclaracaoDeIdentificadoresFactory.getReader(tokens).execute(escopo);
+                DeclaracaoDeIdentificadoresFactory.getReader(tokens, token).execute(escopo);
+                return;
             } else if (token.isIdentificador()){
                 ler(token, escopo);
             }

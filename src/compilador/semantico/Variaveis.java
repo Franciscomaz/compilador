@@ -14,7 +14,7 @@ public class Variaveis {
 
     public void adicionar(Identificador identificador) throws ErroSemantico {
         if(contem(identificador.nome())){
-            throw new ErroSemantico("identificador já declarado" + identificador.nome());
+            throw new ErroSemantico("identificador já declarado " + identificador.nome() + " " + identificador.getPosicao());
         }
         identificadores.put(identificador.nome(), identificador);
     }

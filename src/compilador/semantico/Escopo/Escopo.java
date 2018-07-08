@@ -17,8 +17,15 @@ public abstract class Escopo {
         this.procedures = new HashMap<>();
     }
 
-    public void adicionarProcedure(Procedure procedure) {
+    public void adicionarProcedure(Procedure procedure) throws ErroSemantico {
+        if (procedures.containsKey(procedure)){
+            throw new ErroSemantico("procedure já declarada " + procedure.getPosicao());
+        }
         procedures.put(procedure, new EscopoInterno(this));
+    }
+
+    public EscopoInterno getProcedure(Procedure procedure){
+        return procedures.get(procedure);
     }
 
     public void adicionarIdentificador(Identificador identificador) throws ErroSemantico {
