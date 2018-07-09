@@ -1,7 +1,5 @@
 package compilador.Identificador.tipo;
 
-import java.util.Objects;
-
 public class Inteiro implements Tipo{
     @Override
     public String nome() {
@@ -9,16 +7,17 @@ public class Inteiro implements Tipo{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Inteiro inteiro = (Inteiro) o;
-        return Objects.equals(nome(), inteiro.nome());
+    public String toString() {
+        return "Nome: " + nome();
     }
 
     @Override
     public int hashCode() {
+        return super.hashCode();
+    }
 
-        return Objects.hash(nome());
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(this.getClass());
     }
 }

@@ -16,7 +16,7 @@ public class TabelaDeSimbolos {
     }
 
     public Simbolo terminalComValor(String simbolo, String valor) {
-        return new Simbolo(terminais.get(simbolo.toUpperCase()), valor);
+        return new Simbolo(terminais.get(simbolo.toUpperCase()), valor.toUpperCase());
     }
 
     private int codigo(String simbolo) {

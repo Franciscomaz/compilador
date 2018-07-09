@@ -1,6 +1,6 @@
 package compilador.semantico;
 
-import compilador.lexico.Leitor;
+import compilador.Identificador.Identificador;
 import compilador.token.Token;
 
 public class ErroSemantico extends Exception {
@@ -8,8 +8,8 @@ public class ErroSemantico extends Exception {
         super("Erro semântico: " + descricao + "\n" + token + " " + token.posicao());
     }
 
-    public ErroSemantico(String descricao, Leitor.Posicao posicao) {
-        super("Erro semântico: " + descricao + "\n" + " " + posicao);
+    public ErroSemantico(String descricao, Identificador identificador) {
+        super("Erro semântico: " + descricao + "\n" + identificador + " " + identificador.getPosicao());
     }
 
     public ErroSemantico(String descricao) {

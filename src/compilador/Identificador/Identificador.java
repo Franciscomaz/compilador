@@ -7,25 +7,16 @@ import compilador.token.Token;
 import java.util.Objects;
 
 public abstract class Identificador extends Simbolo {
+    private Leitor.Posicao posicao;
 
-    private final int nivel;
-    private final Leitor.Posicao posicao;
-
-    public Identificador(Token token, int nivel) {
+    public Identificador(Token token) {
         super(token.codigo(), token.palavra());
-        this.posicao = token.posicao();
-        this.nivel = nivel;
+        posicao = token.posicao();
     }
 
-    public int nivel() {
-        return nivel;
-    }
-
-    public Leitor.Posicao getPosicao(){
+    public Leitor.Posicao getPosicao() {
         return posicao;
     }
-
-    public abstract String categoria();
 
     @Override
     public boolean equals(Object o) {
@@ -37,13 +28,12 @@ public abstract class Identificador extends Simbolo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(nivel, nome());
+        return Objects.hash(nome());
     }
 
     @Override
     public String toString() {
         return "Nome:" + nome() + '\n' +
-                "Nivel=" + nivel + '\n' +
                 "Categoria=" + getClass();
     }
 }

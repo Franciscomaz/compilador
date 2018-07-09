@@ -5,9 +5,10 @@ import compilador.token.Token;
 
 public class Variavel extends Identificador{
     private Tipo tipo;
+    private String valor;
 
-    public Variavel(Token token, int nivel) {
-        super(token, nivel);
+    public Variavel(Token token) {
+        super(token);
     }
 
     public Tipo getTipo() {
@@ -19,8 +20,11 @@ public class Variavel extends Identificador{
         return this;
     }
 
-    @Override
-    public String categoria() {
-        return "variavel";
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 }
