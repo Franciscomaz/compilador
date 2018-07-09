@@ -2,9 +2,7 @@ package compilador.semantico;
 
 import compilador.Identificador.*;
 import compilador.semantico.Escopo.AnalisadorDeEscopo;
-import compilador.semantico.Escopo.Declaracao;
 import compilador.semantico.Escopo.EscopoGlobal;
-import compilador.semantico.Escopo.Execucao;
 import compilador.token.Token;
 
 import java.util.Stack;

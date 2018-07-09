@@ -28,6 +28,10 @@ public class Execucao {
                 escopo.buscar(token);
             } else if (token.palavra().equals("CALL")){
                 lerChamada();
+            } else if (token.palavra().equals("WRITELN")){
+                lerWriteln();
+            } else if (token.palavra().equals("READLN")){
+                lerReadln();
             }
             else if (token.codigo() == 6) {
                 nivel++;
@@ -40,13 +44,15 @@ public class Execucao {
 
     private void lerChamada() throws ErroSemantico {
         int posicao = 0;
+        int nivelDosParenteses = 0;
         Token token = tokens.pop();
         EscopoInterno procedure = escopo.getProcedure(new Procedure(token));
         Parametros parametros = procedure.getParametros();
-        while(token.codigo() != 47){
+
+        while(token.codigo() != 37 || nivelDosParenteses != 0){
             token = tokens.pop();
             if(token.isIdentificador()){
-                Parametro parametro = parametros.buscar(posicao++);
+                Parametro parametro = parametros.buscar(posicao);
                 Identificador identificador = escopo.buscar(token);
                 if(isCategoriaInvalida(identificador)){
                     throw new ErroSemantico("categoria invalida", identificador);
@@ -56,9 +62,41 @@ public class Execucao {
                     throw new ErroSemantico("tipo invalido: " + variavel.getTipo().getClass(), variavel);
                 }
             } else if (token.codigo() == 26){
-                Parametro parametro = parametros.buscar(posicao++);
+                Parametro parametro = parametros.buscar(posicao);
                 if(!parametro.getTipo().equals(new Inteiro())){
                     throw new ErroSemantico("tipo invalido: " + Inteiro.class, token);
+                }
+            }else if (token.codigo() == 36){
+                nivelDosParenteses++;
+            } else if (token.codigo() == 37){
+                nivelDosParenteses--;
+            } else if (token.codigo() == 46){
+                posicao++;
+            }
+        }
+    }
+
+    private void lerReadln() throws ErroSemantico {
+        Token token = tokens.pop();
+        while(token.codigo() != 37){
+            token = tokens.pop();
+            if(token.isIdentificador()){
+                Identificador identificador = escopo.buscar(token);
+                if(isCategoriaInvalida(identificador)){
+                    throw new ErroSemantico("categoria invalida", identificador);
+                }
+            }
+        }
+    }
+
+    private void lerWriteln() throws ErroSemantico {
+        Token token = tokens.pop();
+        while(token.codigo() != 37){
+            token = tokens.pop();
+            if(token.isIdentificador()){
+                Identificador identificador = escopo.buscar(token);
+                if(isCategoriaInvalida(identificador)){
+                    throw new ErroSemantico("categoria invalida", identificador);
                 }
             }
         }

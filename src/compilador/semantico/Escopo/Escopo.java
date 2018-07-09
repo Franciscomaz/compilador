@@ -19,12 +19,15 @@ public abstract class Escopo {
 
     public void adicionarProcedure(Procedure procedure) throws ErroSemantico {
         if (procedures.containsKey(procedure)){
-            throw new ErroSemantico("procedure já declarada " + procedure.getPosicao());
+            throw new ErroSemantico("procedure já declarada ", procedure);
         }
         procedures.put(procedure, new EscopoInterno(this));
     }
 
-    public EscopoInterno getProcedure(Procedure procedure){
+    public EscopoInterno getProcedure(Procedure procedure) throws ErroSemantico {
+        if(!procedures.containsKey(procedure)){
+            throw new ErroSemantico("procedure não declarada", procedure);
+        }
         return procedures.get(procedure);
     }
 
