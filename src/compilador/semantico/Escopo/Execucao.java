@@ -1,11 +1,10 @@
 package compilador.semantico.Escopo;
 
-import compilador.Identificador.Constante;
-import compilador.Identificador.Identificador;
-import compilador.Identificador.Variavel;
+import compilador.Identificador.*;
 import compilador.Identificador.procedure.Parametro;
 import compilador.Identificador.procedure.Parametros;
 import compilador.Identificador.procedure.Procedure;
+import compilador.Identificador.tipo.Inteiro;
 import compilador.semantico.ErroSemantico;
 import compilador.token.Token;
 
@@ -49,16 +48,27 @@ public class Execucao {
             if(token.isIdentificador()){
                 Parametro parametro = parametros.buscar(posicao++);
                 Identificador identificador = escopo.buscar(token);
-                if(!(identificador instanceof Variavel || identificador instanceof Constante)){
-                    throw new ErroSemantico("categoria invalida " + identificador.getClass());
+                if(isCategoriaInvalida(identificador)){
+                    throw new ErroSemantico("categoria invalida", identificador);
+                }
+                Variavel variavel = (Variavel) identificador;
+                if (!parametro.getTipo().equals(variavel.getTipo())){
+                    throw new ErroSemantico("tipo invalido: " + variavel.getTipo().getClass(), variavel);
                 }
             } else if (token.codigo() == 26){
-                System.out.println(token.palavra());
+                Parametro parametro = parametros.buscar(posicao++);
+                if(!parametro.getTipo().equals(new Inteiro())){
+                    throw new ErroSemantico("tipo invalido: " + Inteiro.class, token);
+                }
             }
         }
     }
 
     public boolean deveParar(Token token) {
         return token.codigo() == 7 && nivel == 1;
+    }
+
+    private boolean isCategoriaInvalida(Identificador identificador){
+        return identificador instanceof Label || identificador instanceof Program || identificador instanceof Procedure;
     }
 }

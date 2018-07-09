@@ -24,8 +24,8 @@ public class DeclaracaoDeVariaveis extends DeclaracaoDeIdentificadores {
             variaveis.add(variavel);
         } else if (token.isTipo()){
             Tipo tipo = TipoFactory.criar(token.palavra(), tokens);
-            System.out.println(tipo);
-            variaveis.stream().map(variavel -> variavel.setTipo(tipo));
+            variaveis.forEach(variavel -> variavel.setTipo(tipo));
+            variaveis.clear();
         }
     }
 }
